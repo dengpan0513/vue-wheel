@@ -3,9 +3,59 @@
   <head>
     <meta charset="utf-8">
     <title>vue-wheel</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        font-size: 14px;
+        color: #333;
+        --button-height: 32px;
+        --button-border-radius: 4px;
+        --button-border-color: #999;
+        --button-border-color-hover: #666;
+        --button-bgc: #fff;
+        --button-bgc-active: #eee;
+      }
+      body {
+        margin: 20px 0 0 20px;
+      }
+    </style>
+    <style>
+      .w-button {
+        height: var(--button-height);
+        padding: 0 1em;
+        border: 1px solid var(--button-border-color);
+        border-radius: var(--button-border-radius);
+        background-color: var(--button-bgc);
+      }
+      .w-button:hover {
+        border-color: var(--button-border-color-hover);
+      }
+      .w-button:focus {
+        outline: none;
+      }
+      .w-button:active {
+        background-color: var(--button-bgc-active);
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <div id="app">
+      {{ message }}
+      <w-button></w-button>
+    </div>
+    <script src="./node_modules/vue/dist/vue.min.js"></script>
+    <script src="./w-button.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'Button Component'
+        }
+      })
+    </script>
   </body>
 </html>
