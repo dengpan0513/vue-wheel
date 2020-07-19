@@ -1,0 +1,23 @@
+{
+  "name": "vue-wheel",
+  "version": "0.0.1",
+  "description": "Vue UI 组件库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dengdengdengpan/vue-wheel.git"
+  },
+  "keywords": [
+    "Vue",
+    "UI"
+  ],
+  "author": "dengpan0513",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dengdengdengpan/vue-wheel/issues"
+  },
+  "homepage": "https://github.com/dengdengdengpan/vue-wheel#readme"
+}
