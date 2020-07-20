@@ -18,6 +18,10 @@
         --button-bgc: #fff;
         --button-hover-focus: #40a9ff;
         --button-active: #096dd9;
+        --button-primary: #1890ff;
+        --button-danger: #ff4d4f;
+        --button-danger-hover-focus: #ff7875; 
+        --button-danger-active: #d9363e; 
       }
       body {
         margin: 20px 0 0 20px;
@@ -27,7 +31,9 @@
   <body>
     <div id="app">
       <w-button>按钮</w-button>
-      <w-button>主要按钮</w-button>
+      <w-button type="primary">主要按钮</w-button>
+      <w-button type="dashed">虚线按钮</w-button>
+      <w-button type="danger">危险按钮</w-button>
     </div>
     <script src="./src/app.js"></script>
   </body>
