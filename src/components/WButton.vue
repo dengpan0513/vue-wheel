@@ -1,5 +1,7 @@
 <template>
-  <button class="w-button">按钮</button>
+  <button class="w-button">
+    <slot></slot>
+  </button>
 </template>
 
 <script>
@@ -15,6 +17,7 @@ export default {
   border: 1px solid var(--button-border-color);
   border-radius: var(--button-border-radius);
   background-color: var(--button-bgc);
+  cursor: pointer;
 
   &:hover {
     border-color: var(--button-border-color-hover);
