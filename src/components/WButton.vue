@@ -1,20 +1,39 @@
 <template>
-  <button class="w-button" :class="[type && `w-button-${type}`]">
+  <button 
+    class="w-button" 
+    :class="classes"
+  >
     <slot></slot>
   </button>
 </template>
 
 <script>
+import { oneof } from '../utils/helper.js'
+
+const prefixClass = 'w-button-'
+
 export default {
   name: 'WButton',
   props: {
     type: {
       type: String,
-      default: '',
-      validator: (value) => {
-        const buttonTypeArray = ['', 'primary', 'dashed', 'danger']
-        return buttonTypeArray.includes(value)
+      validator (value) {
+        return oneof(value, ['default', 'primary', 'dashed', 'danger'])
       }
+    },
+    shape: {
+      type: String,
+      validator (value) {
+        return oneof(value, ['round', 'circle'])
+      }
+    }
+  },
+  computed: {
+    classes () {
+      return [
+        this.type && `${prefixClass}${this.type}`,
+        this.shape && `${prefixClass}${this.shape}`,
+      ]
     }
   }
 }
@@ -84,5 +103,15 @@ export default {
     background-color: var(--button-danger-active);
     color: #fff;
   }
+}
+
+.w-button-round {
+  border-radius: var(--button-round);
+}
+
+.w-button-circle {
+  width: 32px;
+  border-radius: var(--button-circle);
+  vertical-align: middle;
 }
 </style>
