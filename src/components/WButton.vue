@@ -2,6 +2,7 @@
   <button 
     class="w-button" 
     :class="classes"
+    :disabled="disabled"
   >
     <slot></slot>
   </button>
@@ -26,6 +27,10 @@ export default {
       validator (value) {
         return oneof(value, ['round', 'circle'])
       }
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -62,6 +67,13 @@ export default {
   &:active {
     border-color: var(--button-active);
     color: var(--button-active);
+  }
+
+  &[disabled], &[disabled]:hover, &[disabled]:focus, &[disabled]:active {
+    color: var(--button-disabled-color);
+    border-color: var(--button-disabled-border-color);
+    background-color: var(--button-disabled-bgc);
+    cursor: not-allowed;
   }
 }
 
