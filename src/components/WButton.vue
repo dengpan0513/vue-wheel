@@ -4,17 +4,22 @@
     :class="classes"
     :disabled="disabled"
   >
-    <slot></slot>
+    <w-icon class="w-button-icon" v-if="icon" :icon="icon"></w-icon>
+    <span class="w-button-text">
+      <slot></slot>
+    </span>
   </button>
 </template>
 
 <script>
 import { oneof } from '../utils/helper.js'
+import WIcon from './WIcon.vue'
 
 const prefixClass = 'w-button-'
 
 export default {
   name: 'WButton',
+  components: { WIcon },
   props: {
     type: {
       type: String,
@@ -31,6 +36,15 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    icon: {
+      type: String
+    },
+    iconPosition: {
+      type: String,
+      validator (value) {
+        return oneof(value, ['left', 'right'])
+      }
     }
   },
   computed: {
@@ -38,6 +52,7 @@ export default {
       return [
         this.type && `${prefixClass}${this.type}`,
         this.shape && `${prefixClass}${this.shape}`,
+        this.iconPosition && `${prefixClass}icon-${this.iconPosition}`
       ]
     }
   }
@@ -46,6 +61,9 @@ export default {
 
 <style lang="scss">
 .w-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   height: var(--button-height);
   padding: 0 1em;
   border: 1px solid var(--button-border-color);
@@ -54,6 +72,28 @@ export default {
   color: rgba(0, 0, 0, .65);
   cursor: pointer;
   user-select: none;
+  vertical-align: middle; // 解决 inline 产生的 bug
+
+  > .w-button-icon {
+    order: 1;
+    margin-right: .2em;
+  }
+
+  > .w-button-text {
+    order: 2;
+  }
+
+  &.w-button-icon-right {
+    > .w-button-icon {
+      order: 2;
+      margin-left: .2em;
+      margin-right: 0;
+    }
+
+    > .w-button-text {
+      order: 1;
+    }
+  }
 
   &, &:focus, &:active {
     outline: none;
@@ -123,6 +163,7 @@ export default {
 
 .w-button-circle {
   width: 32px;
+  padding: 0;
   border-radius: var(--button-circle);
   vertical-align: middle;
 }
