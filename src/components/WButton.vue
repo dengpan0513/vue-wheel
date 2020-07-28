@@ -3,8 +3,10 @@
     class="w-button" 
     :class="classes"
     :disabled="disabled"
+    @click="$emit('click')"
   >
-    <w-icon class="w-button-icon" v-if="icon" :icon="icon"></w-icon>
+    <w-icon v-if="icon && !loading" :icon="icon" class="w-button-icon"></w-icon>
+    <w-icon v-if="loading" icon="loading" class="w-button-icon w-button-loading-icon"></w-icon>
     <span class="w-button-text">
       <slot></slot>
     </span>
@@ -45,6 +47,10 @@ export default {
       validator (value) {
         return oneof(value, ['left', 'right'])
       }
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -52,7 +58,8 @@ export default {
       return [
         this.type && `${prefixClass}${this.type}`,
         this.shape && `${prefixClass}${this.shape}`,
-        this.iconPosition && `${prefixClass}icon-${this.iconPosition}`
+        this.iconPosition && `${prefixClass}icon-${this.iconPosition}`,
+        {[`${prefixClass}loading`]: this.loading}
       ]
     }
   }
@@ -60,6 +67,16 @@ export default {
 </script>
 
 <style lang="scss">
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .w-button {
   display: inline-flex;
   justify-content: center;
@@ -72,7 +89,22 @@ export default {
   color: rgba(0, 0, 0, .65);
   cursor: pointer;
   user-select: none;
-  vertical-align: middle; // 解决 inline 产生的 bug
+  vertical-align: middle; // 解决 inline 产生的 bug，让多个按钮在垂直方向对齐
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+    border-radius: inherit;
+    background: #fff;
+    opacity: .35;
+    content: '';
+    pointer-events: none;
+  }
 
   > .w-button-icon {
     order: 1;
@@ -166,5 +198,21 @@ export default {
   padding: 0;
   border-radius: var(--button-circle);
   vertical-align: middle;
+}
+
+.w-button-loading {
+  position: relative;
+
+  > .w-button-loading-icon {
+    animation: spin 2s linear infinite;
+  }
+
+  &::before {
+    display: block;
+  }
+
+  &:not([disabled]) {
+    pointer-events: none;
+  }
 }
 </style>

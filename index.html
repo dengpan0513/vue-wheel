@@ -35,10 +35,10 @@
   </head>
   <body>
     <div id="app">
-      <w-button icon="setting" icon-position="right">按钮</w-button>
-      <w-button type="primary" icon="up">主要按钮</w-button>s
+      <w-button icon="setting" icon-position="right" :loading="loading1" @click="loading1 = !loading1">按钮</w-button>
+      <w-button type="primary" icon="up" :loading="true">主要按钮</w-button>
       <w-button type="dashed">虚线按钮</w-button>
-      <w-button type="danger" icon="download" icon-position="right">危险按钮</w-button>
+      <w-button type="danger" icon="download" icon-position="right" :loading="true" disabled>危险按钮</w-button>
       <w-button disabled>禁用按钮</w-button>
       <w-button type="default" shape="round">圆角按钮</w-button>
       <w-button type="dashed" shape="circle" icon="download"></w-button>
