@@ -59,7 +59,7 @@ export default {
         this.type && `${prefixClass}${this.type}`,
         this.shape && `${prefixClass}${this.shape}`,
         this.iconPosition && `${prefixClass}icon-${this.iconPosition}`,
-        {[`${prefixClass}loading`]: this.loading}
+        { [`${prefixClass}loading`]: this.loading }
       ]
     }
   }
@@ -93,10 +93,10 @@ export default {
 
   &::before {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
     z-index: 1;
     display: none;
     border-radius: inherit;
