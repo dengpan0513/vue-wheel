@@ -14,6 +14,8 @@ new Vue({
 
 // WButton 单元测试
 import chai from 'chai'
+import spies from 'chai-spies'
+chai.use(spies)
 const expect = chai.expect
 
 {
@@ -66,7 +68,8 @@ const expect = chai.expect
   })
   vm.$mount()
   const useElement = vm.$el.querySelector('use')
-  expect(useElement.getAttribute('xlink:href')).to.equal('#icon-setting')
+  const xlinkHref = useElement.getAttribute('xlink:href')
+  expect(xlinkHref).to.equal('#icon-setting')
   vm.$destroy()
 }
 
@@ -81,7 +84,8 @@ const expect = chai.expect
   })
   vm.$mount(divElement)
   const svgElement = vm.$el.querySelector('svg')
-  expect(getComputedStyle(svgElement).order).to.equal('1')
+  const { order } = window.getComputedStyle(svgElement)
+  expect(order).to.equal('1')
   vm.$el.remove()
   vm.$destroy()
 }
@@ -98,7 +102,8 @@ const expect = chai.expect
   })
   vm.$mount(divElement)
   const svgElement = vm.$el.querySelector('svg')
-  expect(getComputedStyle(svgElement).order).to.equal('2')
+  const { order } = window.getComputedStyle(svgElement)
+  expect(order).to.equal('2')
   vm.$el.remove()
   vm.$destroy()
 }
@@ -115,6 +120,22 @@ const expect = chai.expect
   const svgElements = vm.$el.querySelectorAll('svg')
   expect(svgElements.length).to.equal(1)
   const useElement = vm.$el.querySelector('use')
-  expect(useElement.getAttribute('xlink:href')).to.equal('#icon-loading')
+  const xlinkHref = useElement.getAttribute('xlink:href')
+  expect(xlinkHref).to.equal('#icon-loading')
+  vm.$destroy()
+}
+
+{
+  const Constructor = Vue.extend(WButton)
+  const vm = new Constructor({
+    propsData: {
+      icon: 'setting'
+    }
+  })
+  vm.$mount()
+  const spy = chai.spy(function () {})
+  vm.$on('click', spy)
+  vm.$el.click()
+  expect(spy).to.have.been.called()
   vm.$destroy()
 }
