@@ -111,6 +111,7 @@ describe('WButton ', () => {
       vm.$on('click', spy)
       vm.$el.click()
       expect(spy).to.have.been.called
+      vm.$destroy()
     })
   })
 })
