@@ -105,7 +105,8 @@ describe('WButton ', () => {
 
   describe('事件', () => {
     it('支持 click', () => {
-      vm = new Constructor({}).$mount()
+      const Constructor = Vue.extend(WButton)
+      const vm = new Constructor({}).$mount()
       const spy = sinon.fake()
       vm.$on('click', spy)
       vm.$el.click()

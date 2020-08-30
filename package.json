@@ -4,7 +4,8 @@
   "description": "Vue UI 组件库",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-test": "parcel watch tests/* --no-cache & karma start",
+    "test": "parcel build tests/* --no-cache --no-minify && karma start --single-run"
   },
   "repository": {
     "type": "git",
