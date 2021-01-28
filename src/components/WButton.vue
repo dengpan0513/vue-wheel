@@ -6,7 +6,7 @@
     @click="$emit('click')"
   >
     <w-icon v-if="icon && !loading" :icon="icon" class="w-button-icon"></w-icon>
-    <w-icon v-if="loading" icon="loading" class="w-button-icon w-button-loading-icon"></w-icon>
+    <w-icon v-if="loading" icon="loading" class="w-button-icon w-button-icon-loading"></w-icon>
     <span class="w-button-text">
       <slot></slot>
     </span>
@@ -55,11 +55,12 @@ export default {
   },
   computed: {
     classes () {
+      const { type, shape, iconPosition, loading } = this
       return [
-        this.type && `${prefixClass}${this.type}`,
-        this.shape && `${prefixClass}${this.shape}`,
-        this.iconPosition && `${prefixClass}icon-${this.iconPosition}`,
-        { [`${prefixClass}loading`]: this.loading }
+        type && `${prefixClass}${type}`,
+        shape && `${prefixClass}${shape}`,
+        iconPosition && `${prefixClass}icon-${iconPosition}`,
+        { [`${prefixClass}loading`]: loading }
       ]
     }
   }
@@ -106,27 +107,6 @@ export default {
     pointer-events: none;
   }
 
-  > .w-button-icon {
-    order: 1;
-    margin-right: .2em;
-  }
-
-  > .w-button-text {
-    order: 2;
-  }
-
-  &.w-button-icon-right {
-    > .w-button-icon {
-      order: 2;
-      margin-left: .2em;
-      margin-right: 0;
-    }
-
-    > .w-button-text {
-      order: 1;
-    }
-  }
-
   &, &:focus, &:active {
     outline: none;
   }
@@ -146,6 +126,18 @@ export default {
     border-color: var(--button-disabled-border-color);
     background-color: var(--button-disabled-bgc);
     cursor: not-allowed;
+  }
+
+  .w-button-icon {
+    margin-right: .2em;
+  }
+
+  &.w-button-icon-right {
+    .w-button-icon {
+      order: 1;
+      margin-right: 0;
+      margin-left: .2em;
+    }
   }
 }
 
@@ -203,7 +195,7 @@ export default {
 .w-button-loading {
   position: relative;
 
-  > .w-button-loading-icon {
+  > .w-button-icon-loading {
     animation: spin 2s linear infinite;
   }
 
