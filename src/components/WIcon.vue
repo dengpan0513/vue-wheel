@@ -1,5 +1,5 @@
 <template>
-  <svg class="w-icon" aria-hidden="true">
+  <svg v-if="icon" class="w-icon" aria-hidden="true">
     <use :xlink:href="`#icon-${icon}`" />
   </svg>
 </template>
@@ -9,7 +9,8 @@ export default {
   name: 'WIcon',
   props: {
     icon: {
-      type: String
+      type: String,
+      default: ''
     }
   }
 }
