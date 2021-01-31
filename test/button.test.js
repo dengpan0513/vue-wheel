@@ -59,7 +59,7 @@ describe('WButton ', () => {
       expect(xlinkHref).to.equal('#icon-setting')
     })
 
-    it('未设置 iconPosition 时，svg 元素的 order 是 1', () => {
+    it('未设置 iconPosition 时，svg 元素的 order 是 0', () => {
       const divElement = document.createElement('div')
       document.body.appendChild(divElement)
       vm = new Constructor({
@@ -69,11 +69,11 @@ describe('WButton ', () => {
       }).$mount(divElement)
       const svgElement = vm.$el.querySelector('svg')
       const { order } = window.getComputedStyle(svgElement)
-      expect(order).to.equal('1')
+      expect(order).to.equal('0')
       vm.$el.remove()
     })
 
-    it('设置 iconPosition 为 right 时，svg 元素的 order 是 2', () => {
+    it('设置 iconPosition 为 right 时，svg 元素的 order 是 1', () => {
       const divElement = document.createElement('div')
       document.body.appendChild(divElement)
       vm = new Constructor({
@@ -84,7 +84,7 @@ describe('WButton ', () => {
       }).$mount(divElement)
       const svgElement = vm.$el.querySelector('svg')
       const { order } = window.getComputedStyle(svgElement)
-      expect(order).to.equal('2')
+      expect(order).to.equal('1')
       vm.$el.remove()
     })
 

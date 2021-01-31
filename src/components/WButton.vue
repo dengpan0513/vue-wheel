@@ -1,10 +1,5 @@
 <template>
-  <button 
-    class="w-button" 
-    :class="classes"
-    :disabled="disabled"
-    @click="$emit('click')"
-  >
+  <button class="w-button" :class="classList" :disabled="disabled" type="button" @click="$emit('click')">
     <w-icon v-if="icon && !loading" :icon="icon" class="w-button-icon"></w-icon>
     <w-icon v-if="loading" icon="loading" class="w-button-icon w-button-icon-loading"></w-icon>
     <span class="w-button-text">
@@ -35,12 +30,9 @@ export default {
         return oneof(value, ['round', 'circle'])
       }
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     icon: {
-      type: String
+      type: String,
+      default: ''
     },
     iconPosition: {
       type: String,
@@ -51,10 +43,14 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
-    classes () {
+    classList () {
       const { type, shape, iconPosition, loading } = this
       return [
         type && `${prefixClass}${type}`,
@@ -90,20 +86,20 @@ export default {
   color: rgba(0, 0, 0, .65);
   cursor: pointer;
   user-select: none;
-  vertical-align: middle; // 解决 inline 产生的 bug，让多个按钮在垂直方向对齐
+  vertical-align: middle; // 解决 inline-flex 产生的 bug，让多个按钮在垂直方向对齐
 
   &::before {
+    display: none;
     position: absolute;
     top: -1px;
     right: -1px;
     bottom: -1px;
     left: -1px;
     z-index: 1;
-    display: none;
-    border-radius: inherit;
-    background: #fff;
-    opacity: .35;
     content: '';
+    border-radius: inherit;
+    background-color: #fff;
+    opacity: .35;
     pointer-events: none;
   }
 
