@@ -11,7 +11,7 @@ export default {
     for (let htmlElement of this.$el.children) {
       const htmlName = htmlElement.tagName.toLowerCase()
       if (htmlName !== 'button') {
-        console.warn(`w-button-group 的子元素应该是 button，而你写的是 ${htmlName}`)
+        console.warn(`w-button-group 的子元素应该是 w-button，而你写的是 ${htmlName}`)
       }
     }
   }

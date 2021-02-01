@@ -59,7 +59,7 @@ describe('WButton ', () => {
       expect(xlinkHref).to.equal('#icon-setting')
     })
 
-    it('未设置 iconPosition 时，svg 元素的 order 是 0', () => {
+    it('未设置 iconPosition 时，svg 元素的 order 为 0', () => {
       const divElement = document.createElement('div')
       document.body.appendChild(divElement)
       vm = new Constructor({
@@ -73,7 +73,7 @@ describe('WButton ', () => {
       vm.$el.remove()
     })
 
-    it('设置 iconPosition 为 right 时，svg 元素的 order 是 1', () => {
+    it('设置 iconPosition 为 right 时，svg 元素的 order 为 1', () => {
       const divElement = document.createElement('div')
       document.body.appendChild(divElement)
       vm = new Constructor({
