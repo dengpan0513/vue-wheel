@@ -34,23 +34,22 @@
         --button-disabled-border-color: #d9d9d9;
         --button-disabled-bgc: #f5f5f5;
       }
+    </style>
+    <style>
       body {
-        margin: 20px 0 0 20px;
+        margin: 20px 20px 0 20px;
       }
       .divide:not(:last-child) {
-        margin-bottom: 20px;
-      }
-      .divide .winput-wrapper:not(:last-child) {
-        margin-bottom: 10px;
+        margin-bottom: 30px;
       }
     </style>
   </head>
   <body>
     <div id="app">
       <div class="divide">
-        <w-input readonly></w-input>
-        <w-input disabled></w-input>
-        <w-input placeholder="xxx"></w-input>
+        <w-input placeholder="kkkkk" :max-length="2" tabindex="3"></w-input>
+        <w-input disabled value="xxx"></w-input>
+        <w-input></w-input>
       </div>
       <div class="divide">
         <w-button icon="setting" icon-position="right" :loading="loading1" @click="loading1 = !loading1">按钮</w-button>
