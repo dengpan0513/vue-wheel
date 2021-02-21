@@ -103,7 +103,7 @@ describe('WButton ', () => {
     })
   })
 
-  describe('事件', () => {
+  describe('event ', () => {
     it('支持 click', () => {
       const Constructor = Vue.extend(WButton)
       const vm = new Constructor({}).$mount()

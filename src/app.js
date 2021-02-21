@@ -11,6 +11,6 @@ new Vue({
   el: '#app',
   data: {
     loading1: false,
-    message: 'vue'
+    message: '落霞与孤鹜齐飞，秋水共长天一色'
   }
 })

@@ -5,22 +5,30 @@
       <w-icon v-if="!$slots.prefix" :icon="prefix"></w-icon>
     </span>
     <input
+      ref="input"
       class="w-input"
       v-bind="$attrs"
       :value="value"
-      :type="type"
+      :type="getType"
       :readonly="readonly"
       :disabled="disabled"
       :autofocus="autofocus"
       :maxlength="maxLength"
       @input="$emit('input', $event.target.value)"
+      @change="$emit('change', $event.target.value)"
+      @focus="$emit('focus', $event)"
+      @blur="$emit('blur', $event)"
     >
     <span v-if="showSuffix" class="w-input-suffix-wrapper">
       <span v-if="suffix || $slots.suffix" class="w-input-suffix-icon">
         <slot name="suffix"></slot>
         <w-icon v-if="!$slots.suffix" :icon="suffix"></w-icon>
       </span>
-      <w-icon v-if="showClear" icon="clear" class="w-icon-clear" @click="clear"></w-icon>
+      <w-icon v-if="showClear" icon="clear" class="w-icon-input" @click="clear"></w-icon>
+      <template v-if="showPassword">
+        <w-icon v-if="!passwordVisible" icon="eye-close" class="w-icon-input" @click="toggleShowPassword"></w-icon>
+        <w-icon v-else icon="eye" class="w-icon-input" @click="toggleShowPassword"></w-icon>
+      </template>
     </span>
   </div>
 </template>
@@ -65,24 +73,37 @@ export default {
     clearable: {
       type: Boolean,
       default: false
+    },
+    showPassword: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      passwordVisible: false
     }
   },
   computed: {
     classList () {
-      const { disabled, prefix, suffix, $slots, clearable } = this
+      const { disabled, prefix, $slots } = this
       return [
         disabled && 'w-input-wrapper-disabled',
         (prefix || $slots.prefix) && 'w-input-wrapper-prefix',
-        (suffix || $slots.suffix || clearable) && 'w-input-wrapper-suffix'
+        this.showSuffix && 'w-input-wrapper-suffix'
       ]
     },
+    getType () {
+      const { showPassword, type, passwordVisible } = this
+      return showPassword ? (passwordVisible ? 'text' : 'password') : type
+    },
     showSuffix () {
-      const { suffix, $slots, clearable } = this
-      return suffix || $slots.suffix || clearable
+      const { suffix, $slots, clearable, showPassword, value, readonly, disabled } = this
+      return suffix || $slots.suffix || (clearable && value) || showPassword && !readonly && !disabled
     },
     showClear () {
-      const { clearable, value, readonly, disabled } = this
-      return clearable && value && !readonly && !disabled
+      const { clearable, value } = this
+      return clearable && value
     }
   },
   mounted () {
@@ -91,8 +112,8 @@ export default {
   methods: {
     checkAffixChild () {
       const { $slots: { prefix, suffix } } = this
-      const warningMessage = (type) => {
-        return `w-input 中使用 slot 方式添加${type}图标时应该只有一个子元素 w-icon`
+      const warningMessage = (position) => {
+        return `w-input 中使用 slot 方式添加${position}图标时应只有一个子元素且为 w-icon`
       }
       if (prefix) {
         if (prefix.length > 1 || prefix[0].tag !== 'svg') {
@@ -107,6 +128,15 @@ export default {
     },
     clear () {
       this.$emit('input', '')
+      this.$emit('clear')
+    },
+    toggleShowPassword () {
+      this.passwordVisible = !this.passwordVisible
+      this.$refs.input.focus()
+      const length = this.value.length
+      setTimeout(() => {
+        this.$refs.input.setSelectionRange(length, length)
+      }, 0)
     }
   }
 }
@@ -186,7 +216,7 @@ export default {
     }
   }
 
-  .w-icon-clear {
+  .w-icon-input {
     margin-left: 4px;
     color: $color-gray-light;
 
