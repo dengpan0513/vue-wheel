@@ -47,13 +47,19 @@
   <body>
     <div id="app">
       <div class="divide">
+        <w-row>
+          <w-col :span="4" order="1">111</w-col>
+          <w-col :span="6">222</w-col>
+          <w-col :span="4">333</w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="2" :push="4">aaa</w-col>
+          <w-col :span="2" :pull="2">bbb</w-col>
+        </w-row> 
+      </div>
+      <div class="divide">
         <w-input v-model="message" clearable show-password suffix="up" placeholder="测试测试"></w-input>
         <w-input prefix="setting" show-password disabled value="xxx"></w-input>
-        <w-input>
-          <template #prefix>
-            <p>1</p>
-          </template>
-        </w-input>
       </div>
       <div class="divide">
         <w-button icon="setting" icon-position="right" :loading="loading1" @click="loading1 = !loading1">按钮</w-button>
