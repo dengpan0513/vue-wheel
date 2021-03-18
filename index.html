@@ -45,17 +45,19 @@
     </style>
   </head>
   <body>
-    <div id="app">
+    <div id="app" style="background-color: pink;">
       <div class="divide">
-        <w-row>
-          <w-col :span="4" order="1">111</w-col>
-          <w-col :span="6">222</w-col>
-          <w-col :span="4">333</w-col>
+        <w-row :gutter="20" :wrap="false">
+          <w-col :span="8">
+            <div style=" border: 1px solid red;">111</div>
+          </w-col>
+          <w-col :span="8">
+            <div style=" border: 1px solid red;">222</div>
+          </w-col>
+          <w-col :span="12">
+            <div style="height: 50px; border: 1px solid red;">333</div>
+          </w-col>
         </w-row>
-        <w-row>
-          <w-col :span="2" :push="4">aaa</w-col>
-          <w-col :span="2" :pull="2">bbb</w-col>
-        </w-row> 
       </div>
       <div class="divide">
         <w-input v-model="message" clearable show-password suffix="up" placeholder="测试测试"></w-input>

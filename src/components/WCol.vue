@@ -1,5 +1,5 @@
 <template>
-  <div :class="classList" class="w-col">
+  <div :class="classList" :style="styleObject" class="w-col">
     <slot></slot>
   </div>
 </template>
@@ -28,6 +28,11 @@ export default {
       default: 0
     }
   },
+  data () {
+    return {
+      gutterParent: 0
+    }
+  },
   computed: {
     classList () {
       const { span, offset, order, pull, push } = this
@@ -39,7 +44,18 @@ export default {
         pull && `w-col-pull-${pull}`,
         push && `w-col-push-${push}`
       ]
+    },
+    styleObject () {
+      const { gutterParent } = this
+      const space = (gutterParent / 2) + 'px'
+      return {
+        paddingRight: space,
+        paddingLeft: space
+      }
     }
+  },
+  created () {
+    this.gutterParent = this.$parent.gutter
   }
 }
 </script>

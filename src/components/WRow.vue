@@ -1,14 +1,53 @@
 <template>
-  <div class="w-row">
+  <div :class="classList" :style="styleObject" class="w-row">
     <slot></slot>
   </div>
 </template>
 
 <script>
+import { oneof } from '../utils/helper.js'
+
 export default {
   name: 'WRow',
   props: {
-    //
+    gutter: {
+      type: Number,
+      default: 0
+    },
+    justify: {
+      type: String,
+      validator (value) {
+        return oneof(value, ['start', 'end', 'center', 'space-bewteen', 'space-around'])
+      }
+    },
+    align: {
+      type: String,
+      validator (value) {
+        return oneof(value, ['top', 'middle', 'bottom'])
+      }
+    },
+    wrap: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    classList () {
+      const { justify, align, wrap } = this
+      return [
+        justify && `w-row-${justify}`,
+        align && `w-row-${align}`,
+        !wrap && `w-row-no-wrap`
+      ]
+    },
+    styleObject () {
+      const { gutter } = this
+      const space = (-gutter / 2) + 'px'
+      return {
+        marginRight: space,
+        marginLeft: space
+      }
+    }
   }
 }
 </script>
@@ -16,5 +55,33 @@ export default {
 <style lang="scss" scoped>
 .w-row {
   display: flex;
+  flex-wrap: wrap;
+}
+.w-row-start {
+  justify-content: flex-start;
+}
+.w-row-end {
+  justify-content: flex-end;
+}
+.w-row-center {
+  justify-content: center;
+}
+.w-row-space-between {
+  justify-content: space-between;
+}
+.w-row-space-around {
+  justify-content: space-around;
+}
+.w-row-top {
+  align-items: flex-start;
+}
+.w-row-middle {
+  align-items: center;
+}
+.w-row-bottom {
+  align-items: flex-end;
+}
+.w-row-no-wrap {
+  flex-wrap: nowrap;
 }
 </style>
