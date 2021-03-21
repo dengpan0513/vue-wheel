@@ -19,7 +19,7 @@ export default {
     justify: {
       type: String,
       validator (value) {
-        return oneof(value, ['start', 'end', 'center', 'space-bewteen', 'space-around'])
+        return oneof(value, ['start', 'end', 'center', 'space-between', 'space-around'])
       }
     },
     align: {
