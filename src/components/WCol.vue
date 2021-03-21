@@ -5,7 +5,21 @@
 </template>
 
 <script>
+import { oneof } from '../utils/helper.js'
+
 const classPrefix = 'w-col-'
+const validator = (value) => {
+  if (typeof value === 'object') {
+    let valid
+    const keys = Object.keys(value)
+    keys.forEach(key => {
+      valid = oneof(key, ['span', 'offset', 'order', 'pull', 'push'])
+    })
+    return valid
+  } else {
+    return true
+  }
+}
 
 export default {
   name: 'WCol',
@@ -30,22 +44,28 @@ export default {
       default: 0
     },
     xs: {
-      type: [Number, Object]
+      type: [Number, Object],
+      validator
     },
     sm: {
-      //
+      type: [Number, Object],
+      validator
     },
     md: {
-      //
+      type: [Number, Object],
+      validator
     },
     lg: {
-      //
+      type: [Number, Object],
+      validator
     },
     xl: {
-      //
+      type: [Number, Object],
+      validator
     },
     xxl: {
-      //
+      type: [Number, Object],
+      validator
     }
   },
   data () {
@@ -95,7 +115,7 @@ export default {
         keys.forEach(key => {
           const className = key === 'span' ?
             `${classPrefix}${breakpointString}-${breakpoint[key]}` :
-            `${classPrefix}${label}-${key}-${breakpoint[key]}`
+            `${classPrefix}${key}-${breakpointString}-${breakpoint[key]}`
           classList.push(className)
         })
       }
