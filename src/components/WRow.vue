@@ -50,6 +50,13 @@ export default {
         marginLeft: space
       }
     }
+  },
+  mounted () {
+    for (let i = 0; i < this.$el.children.length; i++) {
+      if (!this.$el.children.item(i).classList.contains('w-col')) {
+        console.warn('WRow 组件的子组件应该是 WCol')
+      }
+    }
   }
 }
 </script>
