@@ -99,7 +99,7 @@ export default {
     }
   },
   created () {
-    this.gutterParent = this.$parent.gutter
+    this.gutterParent = this.$parent ? this.$parent.gutter : 0
   },
   methods: {
     generateClassResponsive (breakpointString) {
