@@ -7,6 +7,8 @@
 <script>
 import { oneof } from '../utils/helper.js'
 
+const classPrefix = 'w-row-'
+
 export default {
   name: 'WRow',
   props: {
@@ -35,9 +37,9 @@ export default {
     classList () {
       const { justify, align, wrap } = this
       return [
-        justify && `w-row-${justify}`,
-        align && `w-row-${align}`,
-        !wrap && `w-row-no-wrap`
+        justify && `${classPrefix}${justify}`,
+        align && `${classPrefix}${align}`,
+        !wrap && `${classPrefix}no-wrap`
       ]
     },
     styleObject () {

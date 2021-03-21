@@ -5,6 +5,8 @@
 </template>
 
 <script>
+const classPrefix = 'w-col-'
+
 export default {
   name: 'WCol',
   props: {
@@ -26,6 +28,24 @@ export default {
     push: {
       type: Number,
       default: 0
+    },
+    xs: {
+      type: [Number, Object]
+    },
+    sm: {
+      //
+    },
+    md: {
+      //
+    },
+    lg: {
+      //
+    },
+    xl: {
+      //
+    },
+    xxl: {
+      //
     }
   },
   data () {
@@ -36,13 +56,17 @@ export default {
   computed: {
     classList () {
       const { span, offset, order, pull, push } = this
-      const classSpan = span === 0 ? 'w-col-0' : (span && `w-col-${span}`)
+      const classSpan = span === 0 ? '${classPrefix}0' : (span && `${classPrefix}${span}`)
+      const classResponsive = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].map(breakpoint => {
+        return this.generateClassResponsive(breakpoint)
+      })
       return [
         classSpan,
-        offset && `w-col-offset-${offset}`,
-        order && `w-col-order-${order}`,
-        pull && `w-col-pull-${pull}`,
-        push && `w-col-push-${push}`
+        offset && `${classPrefix}offset-${offset}`,
+        order && `${classPrefix}order-${order}`,
+        pull && `${classPrefix}pull-${pull}`,
+        push && `${classPrefix}push-${push}`,
+        ...classResponsive
       ]
     },
     styleObject () {
@@ -56,6 +80,27 @@ export default {
   },
   created () {
     this.gutterParent = this.$parent.gutter
+  },
+  methods: {
+    generateClassResponsive (breakpointString) {
+      const breakpoint = this[breakpointString]
+      let classList = []
+      if (!breakpoint) {
+        return classList
+      }
+      if (typeof breakpoint === 'number') {
+        classList.push(`${classPrefix}${breakpointString}-${breakpoint}`)
+      } else {
+        const keys = Object.keys(breakpoint)
+        keys.forEach(key => {
+          const className = key === 'span' ?
+            `${classPrefix}${breakpointString}-${breakpoint[key]}` :
+            `${classPrefix}${label}-${key}-${breakpoint[key]}`
+          classList.push(className)
+        })
+      }
+      return classList
+    }
   }
 }
 </script>
@@ -76,6 +121,7 @@ $class-prefix-offset: w-col-offset-;
 $class-prefix-order: w-col-order-;
 $class-prefix-pull: w-col-pull-;
 $class-prefix-push: w-col-push-;
+
 @for $n from 1 through 24 {
   $space: ($n / 24) * 100%;
 
@@ -98,6 +144,166 @@ $class-prefix-push: w-col-push-;
 
   .#{$class-prefix-push}#{$n} {
     left: $space;
+  }
+}
+
+@for $n from 1 through 24 {
+  $space: ($n / 24) * 100%;
+
+  .#{$class-prefix-span}xs-#{$n} {
+    flex: 0 0 $space;
+    max-width: $space;
+  }
+
+  .#{$class-prefix-offset}xs-#{$n} {
+    margin-left: $space;
+  }
+
+  .#{$class-prefix-order}xs-#{$n} {
+    order: $n;
+  }
+
+  .#{$class-prefix-pull}xs-#{$n} {
+    right: $space;
+  }
+
+  .#{$class-prefix-push}xs-#{$n} {
+    left: $space;
+  }
+}
+
+@media (min-width: 576px) {
+  @for $n from 1 through 24 {
+    $space: ($n / 24) * 100%;
+
+    .#{$class-prefix-span}sm-#{$n} {
+      flex: 0 0 $space;
+      max-width: $space;
+    }
+    
+    .#{$class-prefix-offset}sm-#{$n} {
+      margin-left: $space;
+    }
+
+    .#{$class-prefix-order}sm-#{$n} {
+      order: $n;
+    }
+
+    .#{$class-prefix-pull}sm-#{$n} {
+      right: $space;
+    }
+
+    .#{$class-prefix-push}sm-#{$n} {
+      left: $space;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  @for $n from 1 through 24 {
+    $space: ($n / 24) * 100%;
+
+    .#{$class-prefix-span}md-#{$n} {
+      flex: 0 0 $space;
+      max-width: $space;
+    }
+
+    .#{$class-prefix-offset}md-#{$n} {
+      margin-left: $space;
+    }
+
+    .#{$class-prefix-order}md-#{$n} {
+      order: $n;
+    }
+
+    .#{$class-prefix-pull}md-#{$n} {
+      right: $space;
+    }
+
+    .#{$class-prefix-push}md-#{$n} {
+      left: $space;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  @for $n from 1 through 24 {
+    $space: ($n / 24) * 100%;
+
+    .#{$class-prefix-span}lg-#{$n} {
+      flex: 0 0 $space;
+      max-width: $space;
+    }
+
+    .#{$class-prefix-offset}lg-#{$n} {
+      margin-left: $space;
+    }
+
+    .#{$class-prefix-order}lg-#{$n} {
+      order: $n;
+    }
+
+    .#{$class-prefix-pull}lg-#{$n} {
+      right: $space;
+    }
+
+    .#{$class-prefix-push}lg-#{$n} {
+      left: $space;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  @for $n from 1 through 24 {
+    $space: ($n / 24) * 100%;
+
+    .#{$class-prefix-span}xl-#{$n} {
+      flex: 0 0 $space;
+      max-width: $space;
+    }
+
+    .#{$class-prefix-offset}xl-#{$n} {
+      margin-left: $space;
+    }
+
+    .#{$class-prefix-order}xl-#{$n} {
+      order: $n;
+    }
+
+    .#{$class-prefix-pull}xl-#{$n} {
+      right: $space;
+    }
+
+    .#{$class-prefix-push}xl-#{$n} {
+      left: $space;
+    }
+  }
+}
+
+@media (min-width: 1600px) {
+  @for $n from 1 through 24 {
+    $space: ($n / 24) * 100%;
+
+    .#{$class-prefix-span}xxl-#{$n} {
+      flex: 0 0 $space;
+      max-width: $space;
+    }
+
+    .#{$class-prefix-offset}xxl-#{$n} {
+      margin-left: $space;
+    }
+
+    .#{$class-prefix-order}xxl-#{$n} {
+      order: $n;
+    }
+
+    .#{$class-prefix-pull}xxl-#{$n} {
+      right: $space;
+    }
+
+    .#{$class-prefix-push}xxl-#{$n} {
+      left: $space;
+    }
   }
 }
 </style>
