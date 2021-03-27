@@ -21,10 +21,28 @@ Vue.component('w-sider', WSider)
 Vue.component('w-content', WContent)
 Vue.component('w-footer', WFooter)
 
+import Message from './plugins/message.js'
+
+Vue.use(Message)
+
 new Vue({
   el: '#app',
   data: {
     loading1: false,
     message: '落霞与孤鹜齐飞，秋水共长天一色'
+  },
+  methods: {
+    showMessage () {
+      this.$message({
+        content: '落霞与孤鹜齐飞，秋水共长天一色',
+        // type: 'warning',
+        icon: 'clear',
+        duration: 0,
+        closeable: true,
+        onClose (vm) {
+          console.log(111, vm)
+        }
+      })
+    }
   }
 })
