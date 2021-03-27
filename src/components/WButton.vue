@@ -12,7 +12,7 @@
 import { oneof } from '../utils/helper.js'
 import WIcon from './WIcon.vue'
 
-const prefixClass = 'w-button-'
+const classPrefix = 'w-button-'
 
 export default {
   name: 'WButton',
@@ -53,10 +53,10 @@ export default {
     classList () {
       const { type, shape, iconPosition, loading } = this
       return [
-        type && `${prefixClass}${type}`,
-        shape && `${prefixClass}${shape}`,
-        iconPosition && `${prefixClass}icon-${iconPosition}`,
-        { [`${prefixClass}loading`]: loading }
+        type && `${classPrefix}${type}`,
+        shape && `${classPrefix}${shape}`,
+        iconPosition && `${classPrefix}icon-${iconPosition}`,
+        { [`${classPrefix}loading`]: loading }
       ]
     }
   }
