@@ -34,7 +34,9 @@ new Vue({
   methods: {
     showMessage () {
       this.$message({
-        content: '落霞与孤鹜齐飞，秋水共长天一色',
+        dangerouslyEnableHTML: true,
+        // content: '落霞与孤鹜齐飞，秋水共长天一色，落霞与孤鹜齐飞',
+        content: '<p>测试<span>111</span><p>哈哈哈</p></p>',
         // type: 'warning',
         icon: 'clear',
         duration: 0,

@@ -1,10 +1,11 @@
 <template>
   <div :style="styleObject" class="w-message">
-    <div class="w-message-content">
-      <span v-if="showIconPrefix" class="w-message-icon-wrapper">
+    <div class="w-message-content-wrapper">
+      <span v-if="showIconPrefix" :style="{ color: iconColor }" class="w-message-icon-wrapper">
         <w-icon :icon="icon || type" :class="iconClassList"></w-icon>
       </span>
-      <span>{{ content }}</span>
+      <span v-if="!dangerouslyEnableHTML" class="w-message-content">{{ content }}</span>
+      <span v-else v-html="content"></span>
       <w-icon v-if="closeable" icon="close" class="w-message-icon-close" @click="handleClick"></w-icon>
     </div>
   </div>
@@ -35,6 +36,10 @@ export default {
       type: String,
       default: ''
     },
+    iconColor: {
+      type: String,
+      default: ''
+    },
     duration: {
       type: Number,
       default: 3
@@ -49,6 +54,10 @@ export default {
     },
     onClose: {
       type: Function
+    },
+    dangerouslyEnableHTML: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -107,9 +116,11 @@ export default {
   text-align: center;
   pointer-events: none;
 
-  .w-message-content {
+  .w-message-content-wrapper {
     display: inline-flex;
     align-items: center;
+    margin-right: 16px;
+    margin-left: 16px;
     padding: 10px 16px;
     background: #fff;
     border-radius: 2px;
@@ -140,6 +151,10 @@ export default {
       .w-message-icon {
         color: inherit;
       }
+    }
+
+    .w-message-content {
+      text-align: left;
     }
 
     .w-message-icon-close {
