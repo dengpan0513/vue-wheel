@@ -79,6 +79,11 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      timer: null
+    }
+  },
   mounted () {
     this.judgeAutoClose()
   },
@@ -86,17 +91,21 @@ export default {
     judgeAutoClose () {
       const { duration } = this
       if (duration !== 0) {
-        setTimeout(() => {
+        this.timer = setTimeout(() => {
           this.close()
         }, duration * 1000)
       }
     },
     close () {
+      this.timer && clearTimeout(this.timer)
+      this.excuteOnClose()
       this.$el.remove()
       this.$destroy()
     },
     handleClick () {
       this.close()
+    },
+    excuteOnClose () {
       const { onClose } = this
       onClose && onClose(this)
     }

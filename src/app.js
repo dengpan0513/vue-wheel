@@ -34,16 +34,10 @@ new Vue({
   methods: {
     showMessage () {
       this.$message({
-        dangerouslyEnableHTML: true,
-        // content: '落霞与孤鹜齐飞，秋水共长天一色，落霞与孤鹜齐飞',
-        content: '<p>测试<span>111</span><p>哈哈哈</p></p>',
-        // type: 'warning',
+        content: '落霞与孤鹜齐飞，秋水共长天一色，落霞与孤鹜齐飞',
         icon: 'clear',
-        duration: 0,
         closeable: true,
-        onClose (vm) {
-          console.log(111, vm)
-        }
+        duration: 0
       })
     }
   }
