@@ -24,24 +24,24 @@
   },
   "homepage": "https://github.com/dengdengdengpan/vue-wheel#readme",
   "dependencies": {
-    "vue": "^2.6.12",
+    "vue": "^2.6.14",
     "vue-hot-reload-api": "^2.3.4"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.2.0",
-    "chai": "^4.2.0",
+    "@vue/component-compiler-utils": "^3.2.2",
+    "chai": "^4.3.4",
     "karma": "^5.2.3",
     "karma-chai": "^0.1.0",
     "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
     "karma-sinon-chai": "^2.0.2",
-    "mocha": "^8.2.1",
-    "parcel-bundler": "^1.12.4",
-    "sass": "^1.32.5",
+    "mocha": "^8.4.0",
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.35.1",
     "sinon": "^9.2.4",
-    "sinon-chai": "^3.5.0",
-    "vue-template-compiler": "^2.6.12"
+    "sinon-chai": "^3.7.0",
+    "vue-template-compiler": "^2.6.14"
   },
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js"

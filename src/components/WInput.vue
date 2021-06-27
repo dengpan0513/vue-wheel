@@ -165,18 +165,18 @@ export default {
     }
 
     &:hover {
-      border-color: $color-hover;
+      border-color: $color-primary-hover-focus;
     }
 
     &:focus {
-      border-color: $color-hover;
+      border-color: $color-primary-hover-focus;
       outline: none;
       box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
     }
 
     &:disabled {
       background-color: $bgc-disabled;
-      color: $color-gray-light;
+      color: $color-disabled;
       cursor: not-allowed;
 
       &:hover {
@@ -186,7 +186,7 @@ export default {
   }
 
   &.w-input-wrapper-disabled {
-    color: $color-gray-light;
+    color: $color-disabled;
   }
 
   .w-input-prefix-wrapper, .w-input-suffix-wrapper {
@@ -198,7 +198,7 @@ export default {
 
   &.w-input-wrapper-prefix {
     .w-input-prefix-wrapper {
-      left: $input-iocn-gap;
+      left: $input-icon-gap;
     }
 
     .w-input {
@@ -208,9 +208,9 @@ export default {
 
   &.w-input-wrapper-suffix {
     .w-input-suffix-wrapper {
-      right: $input-iocn-gap;
+      right: $input-icon-gap;
     }
-    
+
     .w-input {
       padding-right: $input-padding-affix;
     }
@@ -218,7 +218,7 @@ export default {
 
   .w-icon-input {
     margin-left: 4px;
-    color: $color-gray-light;
+    color: $color-disabled;
 
     &:hover {
       color: $color-gray;

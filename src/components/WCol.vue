@@ -126,6 +126,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+
 .w-col {
   position: relative;
   max-width: 100%;
@@ -143,7 +145,7 @@ $class-prefix-pull: w-col-pull-;
 $class-prefix-push: w-col-push-;
 
 @for $n from 1 through 24 {
-  $space: ($n / 24) * 100%;
+  $space: math.div($n, 24) * 100%;
 
   .#{$class-prefix-span}#{$n} {
     flex: 0 0 $space;
@@ -200,7 +202,7 @@ $class-prefix-push: w-col-push-;
       flex: 0 0 $space;
       max-width: $space;
     }
-    
+
     .#{$class-prefix-offset}sm-#{$n} {
       margin-left: $space;
     }

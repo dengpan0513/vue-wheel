@@ -98,14 +98,14 @@ export default {
     },
     close () {
       this.timer && clearTimeout(this.timer)
-      this.excuteOnClose()
+      this.executeOnClose()
       this.$el.remove()
       this.$destroy()
     },
     handleClick () {
       this.close()
     },
-    excuteOnClose () {
+    executeOnClose () {
       const { onClose } = this
       onClose && onClose(this)
     }
@@ -154,7 +154,7 @@ export default {
       }
 
       .w-message-error {
-        color: $color-error;
+        color: $color-danger;
       }
 
       .w-message-icon {
@@ -169,7 +169,7 @@ export default {
     .w-message-icon-close {
       margin-left: 16px;
       font-size: 14px;
-      color: $color-gray-light;
+      color: $color-disabled;
       cursor: pointer;
 
       &:hover {

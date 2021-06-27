@@ -40,6 +40,10 @@ new Vue({
         closeable: true,
         duration: 0
       })
+    },
+    handleClick () {
+      this.loading1 = true
+      console.log(111)
     }
   }
 })

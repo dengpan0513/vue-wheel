@@ -1,15 +1,21 @@
 <template>
-  <button class="w-button" :class="classList" :disabled="disabled" type="button" @click="$emit('click')">
+  <button
+    :class="classList"
+    :disabled="disabled"
+    class="w-button"
+    type="button"
+    @click="$emit('click')"
+  >
     <w-icon v-if="icon && !loading" :icon="icon" class="w-button-icon"></w-icon>
     <w-icon v-if="loading" icon="loading" class="w-button-icon w-button-icon-loading"></w-icon>
-    <span class="w-button-text">
+    <span>
       <slot></slot>
     </span>
   </button>
 </template>
 
 <script>
-import { oneof } from '../utils/helper.js'
+import { oneof, generateClass } from '../utils/helper.js'
 import WIcon from './WIcon.vue'
 
 const classPrefix = 'w-button-'
@@ -21,8 +27,25 @@ export default {
     type: {
       type: String,
       validator (value) {
-        return oneof(value, ['default', 'primary', 'dashed', 'danger'])
+        const typeList = ['default', 'primary', 'dashed', 'text', 'link']
+        return oneof(value, typeList)
       }
+    },
+    success: {
+      type: Boolean,
+      default: false
+    },
+    warning: {
+      type: Boolean,
+      default: false
+    },
+    danger: {
+      type: Boolean,
+      default: false
+    },
+    ghost: {
+      type: Boolean,
+      default: false
     },
     shape: {
       type: String,
@@ -51,9 +74,13 @@ export default {
   },
   computed: {
     classList () {
-      const { type, shape, iconPosition, loading } = this
+      const { type, success, warning, danger, ghost, shape, iconPosition, loading } = this
       return [
         type && `${classPrefix}${type}`,
+        { [generateClass(classPrefix, 'success')]: success },
+        { [generateClass(classPrefix, 'warning')]: warning },
+        { [generateClass(classPrefix, 'danger')]: danger },
+        { [generateClass(classPrefix, 'ghost')]: ghost },
         shape && `${classPrefix}${shape}`,
         iconPosition && `${classPrefix}icon-${iconPosition}`,
         { [`${classPrefix}loading`]: loading }
@@ -64,6 +91,121 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/variable.scss";
+
+@mixin buttonDisabled() {
+  &[disabled] {
+    border-color: $border-color-disabled;
+    background-color: $bgc-disabled;
+    color: $color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+@mixin buttonDefaultStatus($color-hover-focus, $color-active) {
+  &:hover, &:focus {
+    border-color: $color-hover-focus;
+    color: $color-hover-focus;
+  }
+
+  &:active {
+    border-color: $color-active;
+    color: $color-active;
+  }
+}
+
+@mixin setColorInDefault($color, $color-hover-focus, $color-active) {
+  border-color: $color;
+  color: $color;
+  @include buttonDefaultStatus($color-hover-focus, $color-active);
+  @include buttonDisabled;
+}
+
+@mixin setColorInPrimary($color, $color-hover-focus, $color-active) {
+  border-color: $color;
+  background-color: $color;
+  color: #fff;
+
+  &:hover, &:focus, &:active {
+    color: #fff;
+  }
+
+  &:hover, &:focus {
+    border-color: $color-hover-focus;
+    background-color: $color-hover-focus;
+  }
+
+  &:active {
+    border-color: $color-active;
+    background-color: $color-active;
+  }
+
+  @include buttonDisabled;
+
+  &.w-button-ghost {
+    border-color: $color;
+    background-color: transparent;
+    color: $color;
+
+    &:hover, &:focus {
+      border-color: $color-hover-focus;
+      background-color: transparent;
+      color: $color-hover-focus;
+    }
+
+    &:active {
+      border-color: $color-active;
+      background-color: transparent;
+      color: $color-active;
+    }
+
+    &:disabled {
+      border-color: $border-color-disabled;
+      color: $color-disabled;
+    }
+  }
+}
+
+@mixin setColorInText($color, $color-hover-focus, $color-active) {
+  border-color: transparent;
+
+  &:hover, &:focus, &:active {
+    border-color: transparent;
+    color: $color;
+  }
+
+  &:hover, &:focus {
+    background-color: rgba(0, 0, 0, .018);
+    color: $color-hover-focus;
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, .028);
+    color: $color-active;
+  }
+
+  @include buttonDisabled;
+}
+
+@mixin setColorInLink($color, $color-hover-focus, $color-active) {
+  border-color: transparent;
+  color: $color;
+
+  &:hover, &:focus, &:active {
+    border-color: transparent;
+  }
+
+  &:hover, &:focus {
+    color: $color-hover-focus;
+  }
+
+  &:active {
+    color: $color-active;
+  }
+
+  @include buttonDisabled;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -78,12 +220,14 @@ export default {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: var(--button-height);
+  height: 32px;
   padding: 0 1em;
-  border: 1px solid var(--button-border-color);
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-bgc);
-  color: rgba(0, 0, 0, .65);
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  background-color: #fff;
+  color: $color;
+  font-size: $font-size;
+  line-height: 1;
   cursor: pointer;
   user-select: none;
   vertical-align: middle; // 解决 inline-flex 产生的 bug，让多个按钮在垂直方向对齐
@@ -107,22 +251,8 @@ export default {
     outline: none;
   }
 
-  &:hover, &:focus {
-    border-color: var(--button-hover-focus);
-    color: var(--button-hover-focus);
-  }
-
-  &:active {
-    border-color: var(--button-active);
-    color: var(--button-active);
-  }
-
-  &[disabled], &[disabled]:hover, &[disabled]:focus, &[disabled]:active {
-    color: var(--button-disabled-color);
-    border-color: var(--button-disabled-border-color);
-    background-color: var(--button-disabled-bgc);
-    cursor: not-allowed;
-  }
+  @include buttonDefaultStatus($color-primary-hover-focus, $color-primary-active);
+  @include buttonDisabled;
 
   .w-button-icon {
     margin-right: .2em;
@@ -135,45 +265,82 @@ export default {
       margin-left: .2em;
     }
   }
+
+  &.w-button-success {
+    @include setColorInDefault($color-success, $color-success-hover-focus, $color-success-active);
+  }
+
+  &.w-button-warning {
+    @include setColorInDefault($color-warning, $color-warning-hover-focus, $color-warning-active);
+  }
+
+  &.w-button-danger {
+    @include setColorInDefault($color-danger, $color-danger-hover-focus, $color-danger-active);
+  }
+
+  &.w-button-ghost {
+    border-color: #fff;
+    background-color: transparent;
+    color: #fff;
+
+    &:disabled {
+      border-color: $border-color-disabled;
+      background-color: transparent;
+      color: $color-disabled;
+    }
+  }
 }
 
 .w-button-primary {
-  border-color: var(--button-primary);
-  background-color: var(--button-primary);
-  color: #fff;
+  @include setColorInPrimary($color-primary, $color-primary-hover-focus, $color-primary-active);
 
-  &:hover, &:focus {
-    border-color: var(--button-hover-focus);
-    background-color: var(--button-hover-focus);
-    color: #fff;
+  &.w-button-success {
+    @include setColorInPrimary($color-success, $color-success-hover-focus, $color-success-active);
   }
 
-  &:active {
-    border-color: var(--button-active);
-    background-color: var(--button-active);
-    color: #fff;
+  &.w-button-warning {
+    @include setColorInPrimary($color-warning, $color-warning-hover-focus, $color-warning-active);
+  }
+
+  &.w-button-danger {
+    @include setColorInPrimary($color-danger, $color-danger-hover-focus, $color-danger-active);
   }
 }
 
 .w-button-dashed {
   border-style: dashed;
+  @include buttonDefaultStatus($color-primary-hover-focus, $color-primary-active);
 }
 
-.w-button-danger {
-  border-color: var(--button-danger);
-  background-color: var(--button-danger);
-  color: #fff;
+.w-button-text {
+  @include setColorInText($color, $color, $color);
 
-  &:hover, &:focus {
-    border-color: var(--button-danger-hover-focus);
-    background-color: var(--button-danger-hover-focus);
-    color: #fff;
+  &.w-button-success {
+    @include setColorInText($color-success, $color-success-hover-focus, $color-success-active);
   }
 
-  &:active {
-    border-color: var(--button-danger-active);
-    background-color: var(--button-danger-active);
-    color: #fff;
+  &.w-button-warning {
+    @include setColorInText($color-warning, $color-warning-hover-focus, $color-warning-active);
+  }
+
+  &.w-button-danger {
+    @include setColorInText($color-danger, $color-danger-hover-focus, $color-danger-active);
+  }
+}
+
+.w-button-link {
+  @include setColorInLink($color-primary, $color-primary-hover-focus, $color-primary-active);
+
+  &.w-button-success {
+    @include setColorInLink($color-success, $color-success-hover-focus, $color-success-active);
+  }
+
+  &.w-button-warning {
+    @include setColorInLink($color-warning, $color-warning-hover-focus, $color-warning-active);
+  }
+
+  &.w-button-danger {
+    @include setColorInLink($color-danger, $color-danger-hover-focus, $color-danger-active);
   }
 }
 
