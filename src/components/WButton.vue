@@ -50,7 +50,8 @@ export default {
     shape: {
       type: String,
       validator (value) {
-        return oneof(value, ['round', 'circle'])
+        const shapeList = ['round', 'circle']
+        return oneof(value, shapeList)
       }
     },
     icon: {
@@ -76,12 +77,12 @@ export default {
     classList () {
       const { type, success, warning, danger, ghost, shape, iconPosition, loading } = this
       return [
-        type && `${classPrefix}${type}`,
+        type && generateClass(classPrefix, type),
         { [generateClass(classPrefix, 'success')]: success },
         { [generateClass(classPrefix, 'warning')]: warning },
         { [generateClass(classPrefix, 'danger')]: danger },
         { [generateClass(classPrefix, 'ghost')]: ghost },
-        shape && `${classPrefix}${shape}`,
+        shape && generateClass(classPrefix, shape),
         iconPosition && `${classPrefix}icon-${iconPosition}`,
         { [`${classPrefix}loading`]: loading }
       ]
@@ -221,7 +222,8 @@ export default {
   justify-content: center;
   align-items: center;
   height: 32px;
-  padding: 0 1em;
+  padding-right: 1em;
+  padding-left: 1em;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   background-color: #fff;
@@ -345,13 +347,14 @@ export default {
 }
 
 .w-button-round {
-  border-radius: var(--button-round);
+  border-radius: 32px;
 }
 
 .w-button-circle {
   width: 32px;
-  padding: 0;
-  border-radius: var(--button-circle);
+  padding-right: 0;
+  padding-left: 0;
+  border-radius: 50%;
   vertical-align: middle;
 }
 
