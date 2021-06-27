@@ -20,17 +20,17 @@
       body {
         margin: 20px 20px 0 20px;
       }
-      .divide:not(:last-child) {
+      .divider:not(:last-child) {
         margin-bottom: 30px;
       }
     </style>
   </head>
   <body>
     <div id="app">
-      <div class="divide">
+      <div class="divider">
         <w-button type="primary" @click="showMessage">操作</w-button>
       </div>
-      <div class="divide">
+      <div class="divider">
         <w-row>
           <w-col :span="8" :xl="{ order: 2 }" :offset="4">
             <div style=" border: 1px solid red;">111</div>
@@ -43,23 +43,11 @@
           </w-col>
         </w-row>
       </div>
-      <div class="divide">
+      <div class="divider">
         <w-input v-model="message" clearable show-password suffix="up" placeholder="测试测试"></w-input>
         <w-input prefix="setting" show-password disabled value="xxx"></w-input>
       </div>
-      <div class="divide" style="height: 100px; padding: 10px; background-color: #aaa">
-        <w-button shape="round">默认按钮</w-button>
-        <w-button type="default" danger>默认按钮</w-button>
-        <w-button type="primary" danger ghost disabled>主要按钮</w-button>
-        <w-button type="dashed" danger ghost>虚线按钮</w-button>
-        <w-button type="text" success>文字按钮</w-button>
-        <w-button type="link" success>链接按钮</w-button>
-        <w-button icon="setting" icon-position="right" :loading="loading1" @click="handleClick">按钮</w-button>
-        <w-button type="primary" icon="up" :loading="true">主要按钮</w-button>
-        <w-button type="dashed">虚线按钮</w-button>
-        <w-button disabled>禁用按钮</w-button>
-        <w-button type="default" shape="round">圆角按钮</w-button>
-        <w-button type="dashed" shape="circle" icon="download"></w-button>
+      <div class="divider">
         <w-button-group>
           <w-button icon="left">上一页</w-button>
           <w-button>更多</w-button>
@@ -71,8 +59,33 @@
           <w-button icon="up"></w-button>
         </w-button-group>
       </div>
+      <div class="divider" style="height: 100px; padding: 10px; background-color: #aaa">
+        <w-button type="primary" danger ghost disabled>主要按钮</w-button>
+      </div>
+      <div class="divider">
+        <w-button block>加载中</w-button>
+        <w-button loading success>加载中</w-button>
+        <w-button icon="setting">设置</w-button>
+        <w-button type="primary" icon="download">下载</w-button>
+        <w-button type="dashed" icon="plus">新增</w-button>
+        <w-button type="text" icon="close" danger>删除</w-button>
+        <w-button shape="round">圆角按钮</w-button>
+        <w-button shape="round" danger>圆角按钮</w-button>
+        <w-button shape="circle">M</w-button>
+        <w-button shape="circle" warning>W</w-button>
+        <w-button success>默认按钮</w-button>
+        <w-button type="primary" warning>主要按钮</w-button>
+        <w-button type="dashed" danger>虚线按钮</w-button>
+        <w-button type="text" warning>文字按钮</w-button>
+        <w-button type="link" danger>链接按钮</w-button>
+        <w-button>默认按钮</w-button>
+        <w-button type="primary">主要按钮</w-button>
+        <w-button type="dashed">虚线按钮</w-button>
+        <w-button type="text">文字按钮</w-button>
+        <w-button type="link">链接按钮</w-button>
+      </div>
     </div>
     <script src="./src/app.js"></script>
-    <script src="//at.alicdn.com/t/font_1305117_u3rtkwtbajt.js"></script>
+    <script src="//at.alicdn.com/t/font_1305117_6d3ljdwg3rv.js"></script>
   </body>
 </html>

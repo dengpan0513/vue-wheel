@@ -43,7 +43,9 @@ new Vue({
     },
     handleClick () {
       this.loading1 = true
-      console.log(111)
+      setTimeout(() => {
+        this.loading1 = false
+      }, 1000)
     }
   }
 })

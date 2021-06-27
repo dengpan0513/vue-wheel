@@ -61,7 +61,8 @@ export default {
     iconPosition: {
       type: String,
       validator (value) {
-        return oneof(value, ['left', 'right'])
+        const positionList = ['left', 'right']
+        return oneof(value, positionList)
       }
     },
     loading: {
@@ -71,11 +72,15 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    block: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     classList () {
-      const { type, success, warning, danger, ghost, shape, iconPosition, loading } = this
+      const { type, success, warning, danger, ghost, shape, iconPosition, loading, block } = this
       return [
         type && generateClass(classPrefix, type),
         { [generateClass(classPrefix, 'success')]: success },
@@ -83,8 +88,9 @@ export default {
         { [generateClass(classPrefix, 'danger')]: danger },
         { [generateClass(classPrefix, 'ghost')]: ghost },
         shape && generateClass(classPrefix, shape),
-        iconPosition && `${classPrefix}icon-${iconPosition}`,
-        { [`${classPrefix}loading`]: loading }
+        iconPosition && generateClass(classPrefix, 'icon-', iconPosition),
+        { [generateClass(classPrefix, 'loading')]: loading },
+        { [generateClass(classPrefix, 'block')]: block }
       ]
     }
   }
@@ -256,18 +262,6 @@ export default {
   @include buttonDefaultStatus($color-primary-hover-focus, $color-primary-active);
   @include buttonDisabled;
 
-  .w-button-icon {
-    margin-right: .2em;
-  }
-
-  &.w-button-icon-right {
-    .w-button-icon {
-      order: 1;
-      margin-right: 0;
-      margin-left: .2em;
-    }
-  }
-
   &.w-button-success {
     @include setColorInDefault($color-success, $color-success-hover-focus, $color-success-active);
   }
@@ -289,6 +283,19 @@ export default {
       border-color: $border-color-disabled;
       background-color: transparent;
       color: $color-disabled;
+    }
+  }
+
+  $buttonIconMargin: .2em;
+  .w-button-icon {
+    margin-right: $buttonIconMargin;
+  }
+
+  &.w-button-icon-right {
+    .w-button-icon {
+      order: 1;
+      margin-right: 0;
+      margin-left: $buttonIconMargin;
     }
   }
 }
@@ -372,5 +379,9 @@ export default {
   &:not([disabled]) {
     pointer-events: none;
   }
+}
+
+.w-button-block {
+  width: 100%;
 }
 </style>
