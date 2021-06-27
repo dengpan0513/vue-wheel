@@ -13,7 +13,7 @@
 
 <script>
 import WIcon from './WIcon.vue'
-import { oneof } from '../utils/helper.js'
+import { oneOf } from '../utils/helper.js'
 
 const classPrefix = 'w-message-'
 
@@ -29,7 +29,7 @@ export default {
       type: String,
       default: 'info',
       validator (value) {
-        return oneof(value, ['info', 'primary', 'success', 'warning', 'error'])
+        return oneOf(value, ['info', 'primary', 'success', 'warning', 'error'])
       }
     },
     icon: {

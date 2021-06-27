@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { oneof } from '../utils/helper.js'
+import { oneOf } from '../utils/helper.js'
 
 const classPrefix = 'w-row-'
 
@@ -19,13 +19,13 @@ export default {
     justify: {
       type: String,
       validator (value) {
-        return oneof(value, ['start', 'end', 'center', 'space-between', 'space-around'])
+        return oneOf(value, ['start', 'end', 'center', 'space-between', 'space-around'])
       }
     },
     align: {
       type: String,
       validator (value) {
-        return oneof(value, ['top', 'middle', 'bottom'])
+        return oneOf(value, ['top', 'middle', 'bottom'])
       }
     },
     wrap: {

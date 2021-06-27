@@ -2,8 +2,8 @@
   <button
     :class="classList"
     :disabled="disabled"
+    :type="htmlType"
     class="w-button"
-    type="button"
     @click="$emit('click')"
   >
     <w-icon v-if="icon && !loading" :icon="icon" class="w-button-icon"></w-icon>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { oneof, generateClass } from '../utils/helper.js'
+import { oneOf, generateClass } from '../utils/helper.js'
 import WIcon from './WIcon.vue'
 
 const classPrefix = 'w-button-'
@@ -28,7 +28,7 @@ export default {
       type: String,
       validator (value) {
         const typeList = ['default', 'primary', 'dashed', 'text', 'link']
-        return oneof(value, typeList)
+        return oneOf(value, typeList)
       }
     },
     success: {
@@ -51,7 +51,7 @@ export default {
       type: String,
       validator (value) {
         const shapeList = ['round', 'circle']
-        return oneof(value, shapeList)
+        return oneOf(value, shapeList)
       }
     },
     icon: {
@@ -62,7 +62,7 @@ export default {
       type: String,
       validator (value) {
         const positionList = ['left', 'right']
-        return oneof(value, positionList)
+        return oneOf(value, positionList)
       }
     },
     loading: {
@@ -76,6 +76,14 @@ export default {
     block: {
       type: Boolean,
       default: false
+    },
+    htmlType: {
+      type: String,
+      default: 'button',
+      validator (value) {
+        const htmlTypeList = ['button', 'submit', 'reset']
+        return oneOf(value, htmlTypeList)
+      }
     }
   },
   computed: {

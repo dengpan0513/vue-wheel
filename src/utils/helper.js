@@ -4,7 +4,7 @@
  * @param {Array} validArray 检验数组
  * @returns {Boolean}
  */
-export const oneof = (value, validArray) => {
+export const oneOf = (value, validArray) => {
   return validArray.includes(value)
 }
 

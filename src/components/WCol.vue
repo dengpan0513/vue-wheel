@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { oneof } from '../utils/helper.js'
+import { oneOf } from '../utils/helper.js'
 
 const classPrefix = 'w-col-'
 const validator = (value) => {
@@ -13,7 +13,7 @@ const validator = (value) => {
     let valid
     const keys = Object.keys(value)
     keys.forEach(key => {
-      valid = oneof(key, ['span', 'offset', 'order', 'pull', 'push'])
+      valid = oneOf(key, ['span', 'offset', 'order', 'pull', 'push'])
     })
     return valid
   } else {
