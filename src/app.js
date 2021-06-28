@@ -41,7 +41,8 @@ new Vue({
         duration: 0
       })
     },
-    handleClick () {
+    handleClick (event) {
+      console.log(event)
       this.loading1 = true
       setTimeout(() => {
         this.loading1 = false

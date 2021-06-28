@@ -1,17 +1,19 @@
 <template>
-  <button
+  <component
+    :is="tag"
     :class="classList"
     :disabled="disabled"
     :type="htmlType"
+    v-bind="propsByTag"
     class="w-button"
-    @click="$emit('click')"
+    @click="$emit('click', $event)"
   >
     <w-icon v-if="icon && !loading" :icon="icon" class="w-button-icon"></w-icon>
     <w-icon v-if="loading" icon="loading" class="w-button-icon w-button-icon-loading"></w-icon>
     <span>
       <slot></slot>
     </span>
-  </button>
+  </component>
 </template>
 
 <script>
@@ -84,6 +86,16 @@ export default {
         const htmlTypeList = ['button', 'submit', 'reset']
         return oneOf(value, htmlTypeList)
       }
+    },
+    href: {
+      type: String
+    },
+    target: {
+      type: String,
+      validator (value) {
+        const targetList = ['_self', '_blank', '_parent', '_top']
+        return oneOf(value, targetList)
+      }
     }
   },
   computed: {
@@ -100,6 +112,20 @@ export default {
         { [generateClass(classPrefix, 'loading')]: loading },
         { [generateClass(classPrefix, 'block')]: block }
       ]
+    },
+    isHrefMode () {
+      const { href } = this
+      return !!href
+    },
+    tag () {
+      const { isHrefMode } = this
+      return isHrefMode ?  'a' : 'button'
+    },
+    propsByTag () {
+      const { isHrefMode, htmlType, href, target } = this
+      const propButton = { type: htmlType }
+      const propLink = { href, target }
+      return isHrefMode ? propLink : propButton
     }
   }
 }
@@ -286,6 +312,8 @@ export default {
     border-color: #fff;
     background-color: transparent;
     color: #fff;
+
+    @include buttonDefaultStatus($color-primary-hover-focus, $color-primary-active);
 
     &:disabled {
       border-color: $border-color-disabled;
