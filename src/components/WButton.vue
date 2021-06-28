@@ -272,7 +272,7 @@ export default {
   line-height: 1;
   cursor: pointer;
   user-select: none;
-  vertical-align: middle; // 解决 inline-flex 产生的 bug，让多个按钮在垂直方向对齐
+  vertical-align: middle; // 解决 inline-flex 产生的 bug，让多个按钮并排时可以在垂直方向对齐
 
   &::before {
     display: none;
