@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.idea/
+.idea/vue-wheel.iml
 .cache/
 .DS_Store
-.idea/

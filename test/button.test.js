@@ -5,6 +5,7 @@ Vue.config.productionTip = false
 Vue.config.devtools = false
 
 const expect = chai.expect
+const classPrefix = 'w-button-'
 
 describe('WButton ', () => {
   it('存在', () => {
@@ -19,13 +20,16 @@ describe('WButton ', () => {
     })
 
     it('可以设置 type', () => {
-      vm = new Constructor({
-        propsData: {
-          type: 'primary'
-        }
-      }).$mount()
-      const className = vm.$el.className.split(' ')[1]
-      expect(className).to.equal('w-button-primary')
+      const buttonTypeList = ['default', 'primary', 'dashed', 'text', 'link']
+      buttonTypeList.forEach(type => {
+        vm = new Constructor({
+          propsData: {
+            type: type
+          }
+        }).$mount()
+        const className = vm.$el.className.split(' ')[1]
+        expect(className).to.equal(`${classPrefix}${type}`)
+      })
     })
 
     it('可以设置 shape', () => {
