@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedVariable -->
 <template>
   <div :class="classList" :style="styleObject" class="w-col">
     <slot></slot>
@@ -5,20 +6,18 @@
 </template>
 
 <script>
-import { oneOf } from '../utils/helper.js'
+import { oneOf, generateClass } from '../utils/helper.js'
 
 const classPrefix = 'w-col-'
 const validator = (value) => {
+  let valid = true
   if (typeof value === 'object') {
-    let valid
     const keys = Object.keys(value)
     keys.forEach(key => {
       valid = oneOf(key, ['span', 'offset', 'order', 'pull', 'push'])
     })
-    return valid
-  } else {
-    return true
   }
+  return valid
 }
 
 export default {
@@ -68,54 +67,54 @@ export default {
       validator
     }
   },
-  data () {
-    return {
-      gutterParent: 0
-    }
-  },
   computed: {
     classList () {
       const { span, offset, order, pull, push } = this
-      const classSpan = span === 0 ? '${classPrefix}0' : (span && `${classPrefix}${span}`)
+      const classSpan = span === 0 ? '${classPrefix}0' : (span && generateClass(classPrefix, span))
       const classResponsive = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].map(breakpoint => {
         return this.generateClassResponsive(breakpoint)
       })
       return [
         classSpan,
-        offset && `${classPrefix}offset-${offset}`,
-        order && `${classPrefix}order-${order}`,
-        pull && `${classPrefix}pull-${pull}`,
-        push && `${classPrefix}push-${push}`,
+        offset && generateClass(classPrefix, 'offset-', offset),
+        pull && generateClass(classPrefix, 'pull-', pull),
+        push && generateClass(classPrefix, 'push-', push),
+        order && generateClass(classPrefix, 'order-', order),
         ...classResponsive
       ]
     },
     styleObject () {
-      const { gutterParent } = this
-      const space = (gutterParent / 2) + 'px'
-      return {
-        paddingRight: space,
-        paddingLeft: space
+      const { gutter } = this
+      if (gutter) {
+        const gap = (gutter / 2) + 'px'
+        return {
+          paddingRight: gap,
+          paddingLeft: gap
+        }
       }
+    },
+    gutter () {
+      const parent = this.$parent
+      const { name } = parent.$options
+      return name === 'WRow' ? parent.gutter : 0
     }
-  },
-  created () {
-    this.gutterParent = this.$parent ? this.$parent.gutter : 0
   },
   methods: {
     generateClassResponsive (breakpointString) {
       const breakpoint = this[breakpointString]
-      let classList = []
+      const classList = []
       if (!breakpoint) {
         return classList
       }
       if (typeof breakpoint === 'number') {
-        classList.push(`${classPrefix}${breakpointString}-${breakpoint}`)
+        classList.push(generateClass(classPrefix, breakpointString, '-', breakpoint))
       } else {
         const keys = Object.keys(breakpoint)
+        const separator = '-'
         keys.forEach(key => {
           const className = key === 'span' ?
-            `${classPrefix}${breakpointString}-${breakpoint[key]}` :
-            `${classPrefix}${key}-${breakpointString}-${breakpoint[key]}`
+            generateClass(classPrefix, breakpointString, separator, breakpoint[key]) :
+            generateClass(classPrefix, key, separator, breakpointString, separator, breakpoint[key])
           classList.push(className)
         })
       }
@@ -127,6 +126,38 @@ export default {
 
 <style lang="scss" scoped>
 @use "sass:math";
+$class-prefix-span: w-col-;
+$class-prefix-offset:#{$class-prefix-span}offset-;
+$class-prefix-pull: #{$class-prefix-span}pull-;
+$class-prefix-push: #{$class-prefix-span}push-;
+$class-prefix-order: #{$class-prefix-span}order-;
+
+@mixin xxx($class-span, $class-offset, $class-pull, $class-push, $class-order, $breakpoint) {
+  @for $n from 1 through 24 {
+    $width: math.div($n, 24) * 100%;
+
+    .#{$class-span}#{$breakpoint}#{$n} {
+      flex: 0 0 $width;
+      max-width: $width;
+    }
+
+    .#{$class-offset}#{$breakpoint}#{$n} {
+      margin-left: $width;
+    }
+
+    .#{$class-pull}#{$breakpoint}#{$n} {
+      right: $width;
+    }
+
+    .#{$class-push}#{$breakpoint}#{$n} {
+      left: $width;
+    }
+
+    .#{$class-order}#{$breakpoint}#{$n} {
+      order: $n;
+    }
+  }
+}
 
 .w-col {
   position: relative;
@@ -138,194 +169,28 @@ export default {
   }
 }
 
-$class-prefix-span: w-col-;
-$class-prefix-offset: w-col-offset-;
-$class-prefix-order: w-col-order-;
-$class-prefix-pull: w-col-pull-;
-$class-prefix-push: w-col-push-;
+@include xxx($class-prefix-span, $class-prefix-offset, $class-prefix-pull, $class-prefix-push, $class-prefix-order, '');
 
-@for $n from 1 through 24 {
-  $space: math.div($n, 24) * 100%;
+@include xxx($class-prefix-span, $class-prefix-offset, $class-prefix-pull, $class-prefix-push, $class-prefix-order, 'xs-');
 
-  .#{$class-prefix-span}#{$n} {
-    flex: 0 0 $space;
-    max-width: $space;
-  }
-
-  .#{$class-prefix-offset}#{$n} {
-    margin-left: $space;
-  }
-
-  .#{$class-prefix-order}#{$n} {
-    order: $n;
-  }
-
-  .#{$class-prefix-pull}#{$n} {
-    right: $space;
-  }
-
-  .#{$class-prefix-push}#{$n} {
-    left: $space;
-  }
-}
-
-@for $n from 1 through 24 {
-  $space: ($n / 24) * 100%;
-
-  .#{$class-prefix-span}xs-#{$n} {
-    flex: 0 0 $space;
-    max-width: $space;
-  }
-
-  .#{$class-prefix-offset}xs-#{$n} {
-    margin-left: $space;
-  }
-
-  .#{$class-prefix-order}xs-#{$n} {
-    order: $n;
-  }
-
-  .#{$class-prefix-pull}xs-#{$n} {
-    right: $space;
-  }
-
-  .#{$class-prefix-push}xs-#{$n} {
-    left: $space;
-  }
-}
 
 @media (min-width: 576px) {
-  @for $n from 1 through 24 {
-    $space: ($n / 24) * 100%;
-
-    .#{$class-prefix-span}sm-#{$n} {
-      flex: 0 0 $space;
-      max-width: $space;
-    }
-
-    .#{$class-prefix-offset}sm-#{$n} {
-      margin-left: $space;
-    }
-
-    .#{$class-prefix-order}sm-#{$n} {
-      order: $n;
-    }
-
-    .#{$class-prefix-pull}sm-#{$n} {
-      right: $space;
-    }
-
-    .#{$class-prefix-push}sm-#{$n} {
-      left: $space;
-    }
-  }
+  @include xxx($class-prefix-span, $class-prefix-offset, $class-prefix-pull, $class-prefix-push, $class-prefix-order, 'sm-');
 }
 
 @media (min-width: 768px) {
-  @for $n from 1 through 24 {
-    $space: ($n / 24) * 100%;
-
-    .#{$class-prefix-span}md-#{$n} {
-      flex: 0 0 $space;
-      max-width: $space;
-    }
-
-    .#{$class-prefix-offset}md-#{$n} {
-      margin-left: $space;
-    }
-
-    .#{$class-prefix-order}md-#{$n} {
-      order: $n;
-    }
-
-    .#{$class-prefix-pull}md-#{$n} {
-      right: $space;
-    }
-
-    .#{$class-prefix-push}md-#{$n} {
-      left: $space;
-    }
-  }
+  @include xxx($class-prefix-span, $class-prefix-offset, $class-prefix-pull, $class-prefix-push, $class-prefix-order, 'md-');
 }
 
 @media (min-width: 992px) {
-  @for $n from 1 through 24 {
-    $space: ($n / 24) * 100%;
-
-    .#{$class-prefix-span}lg-#{$n} {
-      flex: 0 0 $space;
-      max-width: $space;
-    }
-
-    .#{$class-prefix-offset}lg-#{$n} {
-      margin-left: $space;
-    }
-
-    .#{$class-prefix-order}lg-#{$n} {
-      order: $n;
-    }
-
-    .#{$class-prefix-pull}lg-#{$n} {
-      right: $space;
-    }
-
-    .#{$class-prefix-push}lg-#{$n} {
-      left: $space;
-    }
-  }
+  @include xxx($class-prefix-span, $class-prefix-offset, $class-prefix-pull, $class-prefix-push, $class-prefix-order, 'lg-');
 }
 
 @media (min-width: 1200px) {
-  @for $n from 1 through 24 {
-    $space: ($n / 24) * 100%;
-
-    .#{$class-prefix-span}xl-#{$n} {
-      flex: 0 0 $space;
-      max-width: $space;
-    }
-
-    .#{$class-prefix-offset}xl-#{$n} {
-      margin-left: $space;
-    }
-
-    .#{$class-prefix-order}xl-#{$n} {
-      order: $n;
-    }
-
-    .#{$class-prefix-pull}xl-#{$n} {
-      right: $space;
-    }
-
-    .#{$class-prefix-push}xl-#{$n} {
-      left: $space;
-    }
-  }
+  @include xxx($class-prefix-span, $class-prefix-offset, $class-prefix-pull, $class-prefix-push, $class-prefix-order, 'xl-');
 }
 
 @media (min-width: 1600px) {
-  @for $n from 1 through 24 {
-    $space: ($n / 24) * 100%;
-
-    .#{$class-prefix-span}xxl-#{$n} {
-      flex: 0 0 $space;
-      max-width: $space;
-    }
-
-    .#{$class-prefix-offset}xxl-#{$n} {
-      margin-left: $space;
-    }
-
-    .#{$class-prefix-order}xxl-#{$n} {
-      order: $n;
-    }
-
-    .#{$class-prefix-pull}xxl-#{$n} {
-      right: $space;
-    }
-
-    .#{$class-prefix-push}xxl-#{$n} {
-      left: $space;
-    }
-  }
+  @include xxx($class-prefix-span, $class-prefix-offset, $class-prefix-pull, $class-prefix-push, $class-prefix-order, 'xxl-');
 }
 </style>

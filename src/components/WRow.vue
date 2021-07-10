@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { oneOf } from '../utils/helper.js'
+import { oneOf, generateClass } from '../utils/helper.js'
 
 const classPrefix = 'w-row-'
 
@@ -19,7 +19,7 @@ export default {
     justify: {
       type: String,
       validator (value) {
-        return oneOf(value, ['start', 'end', 'center', 'space-between', 'space-around'])
+        return oneOf(value, ['start', 'end', 'center', 'space-between', 'space-around', 'space-evenly'])
       }
     },
     align: {
@@ -37,17 +37,19 @@ export default {
     classList () {
       const { justify, align, wrap } = this
       return [
-        justify && `${classPrefix}${justify}`,
-        align && `${classPrefix}${align}`,
-        !wrap && `${classPrefix}no-wrap`
+        justify && generateClass(classPrefix, justify),
+        align && generateClass(classPrefix, align),
+        !wrap && generateClass(classPrefix, 'no-wrap')
       ]
     },
     styleObject () {
       const { gutter } = this
-      const space = (-gutter / 2) + 'px'
-      return {
-        marginRight: space,
-        marginLeft: space
+      if (gutter) {
+        const gap = -(gutter / 2) + 'px'
+        return {
+          marginRight: gap,
+          marginLeft: gap
+        }
       }
     }
   },
@@ -66,30 +68,43 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+
 .w-row-start {
   justify-content: flex-start;
 }
+
 .w-row-end {
   justify-content: flex-end;
 }
+
 .w-row-center {
   justify-content: center;
 }
+
 .w-row-space-between {
   justify-content: space-between;
 }
+
 .w-row-space-around {
   justify-content: space-around;
 }
+
+.w-row-space-evenly {
+  justify-content: space-evenly;
+}
+
 .w-row-top {
   align-items: flex-start;
 }
+
 .w-row-middle {
   align-items: center;
 }
+
 .w-row-bottom {
   align-items: flex-end;
 }
+
 .w-row-no-wrap {
   flex-wrap: nowrap;
 }

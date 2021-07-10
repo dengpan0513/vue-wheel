@@ -26,6 +26,11 @@
       .divider:not(:last-child) {
         margin-bottom: 30px;
       }
+      .col-demo {
+        height: 30px;
+        margin-bottom: 25px;
+        border: 1px solid red;
+      }
     </style>
   </head>
   <body>
@@ -34,21 +39,151 @@
         <w-button type="primary" @click="showMessage">操作</w-button>
       </div>
       <div class="divider">
-        <w-row>
-          <w-col :span="8" :xl="{ order: 2 }" :offset="4">
-            <div style=" border: 1px solid red;">111</div>
-          </w-col>
-          <w-col :span="8">
-            <div style=" border: 1px solid red;">222</div>
-          </w-col>
-          <w-col :span="8">
-            <div style="border: 1px solid red;">333</div>
-          </w-col>
-        </w-row>
-      </div>
-      <div class="divider">
         <w-input v-model="message" clearable show-password suffix="up" placeholder="测试测试"></w-input>
         <w-input prefix="setting" show-password disabled value="xxx"></w-input>
+      </div>
+      <div class="divider" style="background-color: #eee">
+        <w-row justify="center">
+          <w-col :xs="12" :sm="10" :md="8" :lg="6" :xl="4" :xxl="2">
+            <div class="col-demo">111</div>
+          </w-col>
+          <w-col :xs="12" :sm="14" :md="16" :lg="18" :xl="20" :xxl="22">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row align="middle" style="height: 100px; border: 1px solid green;">
+          <w-col :span="4" style="border: 1px solid red;">111 - align-items: middle</w-col>
+          <w-col :span="4" style="height: 60px; border: 1px solid red;">222</w-col>
+          <w-col :span="4" style="height: 50px; border: 1px solid red;">333</w-col>
+        </w-row>
+        <w-row justify="center">
+          <w-col :span="4">
+            <div class="col-demo">111 - justify-content: center</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">222</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">333</div>
+          </w-col>
+        </w-row>
+        <w-row justify="end">
+          <w-col :span="4">
+            <div class="col-demo">111 - justify-content: end</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">222</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row justify="space-around">
+          <w-col :span="4">
+            <div class="col-demo">111 - justify-content: space-around</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">222</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row justify="space-evenly">
+          <w-col :span="4">
+            <div class="col-demo">111 - justify-content: space-evenly</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">222</div>
+          </w-col>
+          <w-col :span="4">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="6" :push="9" :order="1">
+            <div class="col-demo">push9 - order</div>
+          </w-col>
+          <w-col :span="3">
+            <div class="col-demo">pull3</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="6" :order="4">
+            <div class="col-demo">1 - order4</div>
+          </w-col>
+          <w-col :span="6" :order="3">
+            <div class="col-demo">2 - order3</div>
+          </w-col>
+          <w-col :span="6" :order="2">
+            <div class="col-demo">3 - order2</div>
+          </w-col>
+          <w-col :span="6" :order="1">
+            <div class="col-demo">4 - order1</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="6" :push="9">
+            <div class="col-demo">push9</div>
+          </w-col>
+          <w-col :span="3" :pull="3">
+            <div class="col-demo">pull3</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="8">
+            <div class="col-demo">offset222</div>
+          </w-col>
+          <w-col :span="6" :offset="12">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="3">
+            <div class="col-demo">offset111</div>
+          </w-col>
+          <w-col :span="6" :offset="9">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="12">
+            <div class="col-demo">111</div>
+          </w-col>
+          <w-col :span="12">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="8">
+            <div class="col-demo">111</div>
+          </w-col>
+          <w-col :span="8">
+            <div class="col-demo">222</div>
+          </w-col>
+          <w-col :span="8">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="4">
+            <div class="col-demo">111</div>
+          </w-col>
+          <w-col :span="20">
+            <div class="col-demo">222</div>
+          </w-col>
+        </w-row>
+        <w-row>
+          <w-col :span="8" :xl="{ order: 2 }" :offset="4">
+            <div class="col-demo">111</div>
+          </w-col>
+          <w-col :span="8">
+            <div class="col-demo">222</div>
+          </w-col>
+          <w-col :span="8">
+            <div class="col-demo">333</div>
+          </w-col>
+        </w-row>
       </div>
       <div class="divider">
         <w-button-group>
