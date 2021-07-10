@@ -134,7 +134,7 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/variable.scss";
 
-@mixin buttonDisabled() {
+@mixin button-disabled() {
   &[disabled] {
     border-color: $border-color-disabled;
     background-color: $bgc-disabled;
@@ -143,7 +143,7 @@ export default {
   }
 }
 
-@mixin buttonDefaultStatus($color-hover-focus, $color-active) {
+@mixin button-default-status($color-hover-focus, $color-active) {
   &:hover, &:focus {
     border-color: $color-hover-focus;
     color: $color-hover-focus;
@@ -155,14 +155,14 @@ export default {
   }
 }
 
-@mixin setColorInDefault($color, $color-hover-focus, $color-active) {
+@mixin set-color-default($color, $color-hover-focus, $color-active) {
   border-color: $color;
   color: $color;
-  @include buttonDefaultStatus($color-hover-focus, $color-active);
-  @include buttonDisabled;
+  @include button-default-status($color-hover-focus, $color-active);
+  @include button-disabled;
 }
 
-@mixin setColorInPrimary($color, $color-hover-focus, $color-active) {
+@mixin set-color-primary($color, $color-hover-focus, $color-active) {
   border-color: $color;
   background-color: $color;
   color: #fff;
@@ -181,7 +181,7 @@ export default {
     background-color: $color-active;
   }
 
-  @include buttonDisabled;
+  @include button-disabled;
 
   &.w-button-ghost {
     border-color: $color;
@@ -207,7 +207,7 @@ export default {
   }
 }
 
-@mixin setColorInText($color, $color-hover-focus, $color-active) {
+@mixin set-color-text($color, $color-hover-focus, $color-active) {
   border-color: transparent;
 
   &:hover, &:focus, &:active {
@@ -225,10 +225,10 @@ export default {
     color: $color-active;
   }
 
-  @include buttonDisabled;
+  @include button-disabled;
 }
 
-@mixin setColorInLink($color, $color-hover-focus, $color-active) {
+@mixin set-color-link($color, $color-hover-focus, $color-active) {
   border-color: transparent;
   color: $color;
 
@@ -244,7 +244,7 @@ export default {
     color: $color-active;
   }
 
-  @include buttonDisabled;
+  @include button-disabled;
 }
 
 @keyframes spin {
@@ -293,19 +293,19 @@ export default {
     outline: none;
   }
 
-  @include buttonDefaultStatus($color-primary-hover-focus, $color-primary-active);
-  @include buttonDisabled;
+  @include button-default-status($color-primary-hover-focus, $color-primary-active);
+  @include button-disabled;
 
   &.w-button-success {
-    @include setColorInDefault($color-success, $color-success-hover-focus, $color-success-active);
+    @include set-color-default($color-success, $color-success-hover-focus, $color-success-active);
   }
 
   &.w-button-warning {
-    @include setColorInDefault($color-warning, $color-warning-hover-focus, $color-warning-active);
+    @include set-color-default($color-warning, $color-warning-hover-focus, $color-warning-active);
   }
 
   &.w-button-danger {
-    @include setColorInDefault($color-danger, $color-danger-hover-focus, $color-danger-active);
+    @include set-color-default($color-danger, $color-danger-hover-focus, $color-danger-active);
   }
 
   &.w-button-ghost {
@@ -313,7 +313,7 @@ export default {
     background-color: transparent;
     color: #fff;
 
-    @include buttonDefaultStatus($color-primary-hover-focus, $color-primary-active);
+    @include button-default-status($color-primary-hover-focus, $color-primary-active);
 
     &:disabled {
       border-color: $border-color-disabled;
@@ -337,55 +337,55 @@ export default {
 }
 
 .w-button-primary {
-  @include setColorInPrimary($color-primary, $color-primary-hover-focus, $color-primary-active);
+  @include set-color-primary($color-primary, $color-primary-hover-focus, $color-primary-active);
 
   &.w-button-success {
-    @include setColorInPrimary($color-success, $color-success-hover-focus, $color-success-active);
+    @include set-color-primary($color-success, $color-success-hover-focus, $color-success-active);
   }
 
   &.w-button-warning {
-    @include setColorInPrimary($color-warning, $color-warning-hover-focus, $color-warning-active);
+    @include set-color-primary($color-warning, $color-warning-hover-focus, $color-warning-active);
   }
 
   &.w-button-danger {
-    @include setColorInPrimary($color-danger, $color-danger-hover-focus, $color-danger-active);
+    @include set-color-primary($color-danger, $color-danger-hover-focus, $color-danger-active);
   }
 }
 
 .w-button-dashed {
   border-style: dashed;
-  @include buttonDefaultStatus($color-primary-hover-focus, $color-primary-active);
+  @include button-default-status($color-primary-hover-focus, $color-primary-active);
 }
 
 .w-button-text {
-  @include setColorInText($color, $color, $color);
+  @include set-color-text($color, $color, $color);
 
   &.w-button-success {
-    @include setColorInText($color-success, $color-success-hover-focus, $color-success-active);
+    @include set-color-text($color-success, $color-success-hover-focus, $color-success-active);
   }
 
   &.w-button-warning {
-    @include setColorInText($color-warning, $color-warning-hover-focus, $color-warning-active);
+    @include set-color-text($color-warning, $color-warning-hover-focus, $color-warning-active);
   }
 
   &.w-button-danger {
-    @include setColorInText($color-danger, $color-danger-hover-focus, $color-danger-active);
+    @include set-color-text($color-danger, $color-danger-hover-focus, $color-danger-active);
   }
 }
 
 .w-button-link {
-  @include setColorInLink($color-primary, $color-primary-hover-focus, $color-primary-active);
+  @include set-color-link($color-primary, $color-primary-hover-focus, $color-primary-active);
 
   &.w-button-success {
-    @include setColorInLink($color-success, $color-success-hover-focus, $color-success-active);
+    @include set-color-link($color-success, $color-success-hover-focus, $color-success-active);
   }
 
   &.w-button-warning {
-    @include setColorInLink($color-warning, $color-warning-hover-focus, $color-warning-active);
+    @include set-color-link($color-warning, $color-warning-hover-focus, $color-warning-active);
   }
 
   &.w-button-danger {
-    @include setColorInLink($color-danger, $color-danger-hover-focus, $color-danger-active);
+    @include set-color-link($color-danger, $color-danger-hover-focus, $color-danger-active);
   }
 }
 
