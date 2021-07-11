@@ -95,8 +95,10 @@ export default {
     },
     gutter () {
       const parent = this.$parent
-      const { name } = parent.$options
-      return name === 'WRow' ? parent.gutter : 0
+      if (parent){
+        const { name } = parent.$options
+        return name === 'WRow' ? parent.gutter : 0
+      }
     }
   },
   methods: {

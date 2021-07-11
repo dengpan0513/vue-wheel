@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import Vue from 'vue'
 import WRow from '../src/components/WRow.vue'
 import WCol from '../src/components/WCol.vue'
@@ -7,24 +9,24 @@ Vue.config.devtools = false
 
 const expect = chai.expect
 
-describe('WRow ', () => {
+describe('WRow ', function() {
   it('存在', () => {
     expect(WRow).to.be.exist
   })
 
-  describe('props ', () => {
+  describe('props ', function() {
     const Constructor = Vue.extend(WRow)
     let vm, divElement
-    beforeEach(() => {
+    beforeEach(function() {
       divElement = document.createElement('div')
       document.body.appendChild(divElement)
     })
-    afterEach(() => {
+    afterEach(function() {
       divElement.remove()
       vm.$destroy()
     })
 
-    it('可以设置 gutter', () => {
+    it('可以设置 gutter', function() {
       Vue.component('w-row', WRow)
       Vue.component('w-col', WCol)
       divElement.innerHTML = `
@@ -43,12 +45,12 @@ describe('WRow ', () => {
       expect(getComputedStyle(cols[0]).paddingRight).to.equal('10px')
       expect(getComputedStyle(cols[1]).paddingLeft).to.equal('10px')
     })
-    
-    describe('可以设置 justify ', () => {
-      const justifyProps = ['start', 'end', 'center', 'space-between', 'space-around']
-      const justifyContentList = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around']
+
+    describe('可以设置 justify ', function() {
+      const justifyProps = ['start', 'end', 'center', 'space-between', 'space-around', 'space-evenly']
+      const justifyContentList = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly']
       justifyProps.forEach((item, index) => {
-        it(`值为 ${item}`, () => {
+        it(`值为 ${item}`, function() {
           vm = new Constructor({
             propsData: {
               justify: item
@@ -60,11 +62,11 @@ describe('WRow ', () => {
       })
     })
 
-    describe('可以设置 align ', () => {
+    describe('可以设置 align ', function() {
       const alignProps = ['top', 'middle', 'bottom']
       const alignItemsList = ['flex-start', 'center', 'flex-end']
       alignProps.forEach((item, index) => {
-        it(`值为 ${item}`, () => {
+        it(`值为 ${item}`, function() {
           vm = new Constructor({
             propsData: {
               align: item
@@ -76,13 +78,13 @@ describe('WRow ', () => {
       })
     })
 
-    describe('可以设置 wrap ', () => {
-      it('值为 true', () => {
+    describe('可以设置 wrap ', function() {
+      it('值为 true', function() {
         vm = new Constructor().$mount(divElement)
         expect(getComputedStyle(vm.$el).flexWrap).to.equal('wrap')
       })
 
-      it('值为 false', () => {
+      it('值为 false', function() {
         vm = new Constructor({
           propsData: {
             wrap: false
