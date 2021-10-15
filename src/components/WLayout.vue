@@ -15,10 +15,10 @@ export default {
     }
   },
   mounted () {
-    this.handleHasSider()
+    this.checkHasSider()
   },
   methods: {
-    handleHasSider () {
+    checkHasSider () {
       this.$children.forEach(child => {
         if (child.$options.name === 'WSider') {
           this.classObject['w-layout-has-sider'] = true
@@ -34,8 +34,7 @@ export default {
 
 .w-layout {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  @extend %flex-column;
 
   &.w-layout-has-sider {
     flex-direction: row;

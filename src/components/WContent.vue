@@ -11,7 +11,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/variable.scss";
+
 .w-content {
   flex-grow: 1;
+  color: $color;
 }
 </style>

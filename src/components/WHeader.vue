@@ -1,12 +1,24 @@
 <template>
-  <header class="w-header">
+  <header :style="styleObject" class="w-header">
     <slot></slot>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'WHeader'
+  name: 'WHeader',
+  props: {
+    height: {
+      type: [String, Number]
+    }
+  },
+  computed: {
+    styleObject () {
+      const { height } = this
+      const heightValue = typeof height === 'string' ? height : `${height}px`
+      return { height: heightValue }
+    }
+  }
 }
 </script>
 
@@ -17,8 +29,6 @@ export default {
   flex: 0 0 auto;
   height: 64px;
   padding: 0 50px;
-  background-color: $color-bgc-dark;
-  line-height: 64px;
   color: $color;
 }
 </style>
