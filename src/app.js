@@ -29,16 +29,16 @@ new Vue({
   el: '#app',
   data: {
     loading1: false,
-    message: '落霞与孤鹜齐飞，秋水共长天一色'
+    message: '落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色'
   },
   methods: {
     showMessage () {
       this.$message({
-        dangerouslyEnableHTML: true,
-        content: '<strong class="xxx">落霞与孤鹜齐飞，秋水共长天一色</strong>',
-        type: 'success',
-        closeable: true,
-        duration: 0
+        type: 'error',
+        icon: 'plus',
+        iconColor: 'green',
+        content: this.message,
+        closeable: true
       })
     },
     handleClick (event) {
