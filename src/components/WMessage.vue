@@ -1,6 +1,6 @@
 <template>
-  <div class="w-message">
-    <w-icon :icon="icon || type" :style="{ color: iconColor }" :class="iconClassList" class="w-message-icon"></w-icon>
+  <div :style="styleObject" class="w-message">
+    <w-icon :icon="icon || type" :style="{ color: prefixIconColor }" :class="iconClassList" class="w-message-icon"></w-icon>
     <span v-if="!dangerouslyUseHTML" class="w-message-content">{{ content }}</span>
     <span v-else v-html="content"></span>
     <w-icon v-if="closeable" class="w-message-close" icon="close" @click="close"></w-icon>
@@ -20,7 +20,7 @@ export default {
     type: {
       type: String,
       default: 'info',
-      validator (value) {
+      validator(value) {
         return oneOf(value, ['info', 'success', 'warning', 'error'])
       }
     },
@@ -42,24 +42,70 @@ export default {
     },
     duration: {
       type: Number,
-      default: 3000
+      default: 3
     },
     closeable: {
       type: Boolean,
       default: false
+    },
+    onClose: {
+      type: Function,
+      default: null
+    },
+    top: {
+      type: Number,
+      default: 8
+    }
+  },
+  data() {
+    return {
+      timer: null
     }
   },
   computed: {
+    prefixIconColor() {
+      const { icon, iconColor } = this
+      return (icon && iconColor) ? iconColor : ''
+    },
     iconClassList() {
       const { type } = this
       return [
         type && `${classPrefix}${type}`
       ]
+    },
+    styleObject() {
+      const { top } = this
+      return {
+        top: `${top}px`
+      }
     }
   },
+  mounted() {
+    this.handleAutoClose()
+  },
   methods: {
-    close() {}
-    //
+    handleAutoClose() {
+      const { duration } = this
+      if (duration > 0) {
+        this.timer = setTimeout(() => {
+          this.close()
+        }, duration * 1000)
+      }
+    },
+    clearTimer() {
+      this.timer && clearTimeout(this.timer)
+    },
+    executeCallback() {
+      if (typeof this.onClose === 'function') {
+        this.onClose(this)
+      }
+    },
+    close() {
+      this.clearTimer()
+      this.executeCallback()
+      this.$destroy()
+      this.$el.remove()
+    }
   }
 }
 </script>
@@ -69,9 +115,9 @@ export default {
 
 .w-message {
   position: fixed;
-  top: 8px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1000;
   @extend %flex-center-vertical;
   padding: 10px 16px;
   background-color: #fff;
