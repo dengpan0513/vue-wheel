@@ -1,10 +1,19 @@
 <template>
-  <div :style="styleObject" class="w-message">
-    <w-icon :icon="icon || type" :style="{ color: prefixIconColor }" :class="iconClassList" class="w-message-icon"></w-icon>
-    <span v-if="!dangerouslyUseHTML" class="w-message-content">{{ content }}</span>
-    <span v-else v-html="content"></span>
-    <w-icon v-if="closeable" class="w-message-close" icon="close" @click="close"></w-icon>
-  </div>
+  <transition name="w-message-slide" @after-leave="handleAfterLeave">
+    <div v-show="visible" :style="styleObject" class="w-message-wrapper">
+      <div class="w-message">
+        <w-icon
+          :icon="icon || type"
+          :style="{ color: prefixIconColor }"
+          :class="iconClassList"
+          class="w-message-icon"
+        ></w-icon>
+        <span v-if="!dangerouslyUseHTML" class="w-message-content">{{ content }}</span>
+        <span v-else v-html="content"></span>
+        <w-icon v-if="closeable" class="w-message-close" icon="close" @click="close"></w-icon>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -54,11 +63,12 @@ export default {
     },
     top: {
       type: Number,
-      default: 8
+      default: 16
     }
   },
   data() {
     return {
+      visible: false,
       timer: null
     }
   },
@@ -81,9 +91,13 @@ export default {
     }
   },
   mounted() {
+    this.toggleVisible(true)
     this.handleAutoClose()
   },
   methods: {
+    toggleVisible (visible) {
+      this.visible = visible
+    },
     handleAutoClose() {
       const { duration } = this
       if (duration > 0) {
@@ -103,8 +117,11 @@ export default {
     close() {
       this.clearTimer()
       this.executeCallback()
-      this.$destroy()
+      this.toggleVisible(false)
+    },
+    handleAfterLeave() {
       this.$el.remove()
+      this.$destroy()
     }
   }
 }
@@ -113,12 +130,27 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/variable.scss";
 
-.w-message {
+.w-message-slide-enter, .w-message-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.w-message-slide-enter-active {
+  transition: all .3s;
+}
+.w-message-slide-leave-active {
+  transition: all .15s;
+}
+
+.w-message-wrapper {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
   z-index: 1000;
-  @extend %flex-center-vertical;
+  text-align: center;
+}
+
+.w-message {
+  @extend %inline-flex-center-vertical;
   padding: 10px 16px;
   background-color: #fff;
   border-radius: 2px;

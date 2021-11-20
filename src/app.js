@@ -29,16 +29,12 @@ new Vue({
   el: '#app',
   data: {
     loading1: false,
-    message: '落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞，秋水共长天一色'
+    message: '落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞'
   },
   methods: {
     showMessage () {
       this.$message({
-        type: 'error',
-        icon: 'plus',
-        iconColor: 'green',
-        content: this.message,
-        closeable: true
+        content: '<em>使用了 HTML 标签</em>'
       })
     },
     handleClick (event) {

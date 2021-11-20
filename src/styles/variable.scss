@@ -32,6 +32,10 @@ $input-icon-gap: 12px;
   display: flex;
   align-items: center;
 }
+%inline-flex-center-vertical {
+  display: inline-flex;
+  align-items: center;
+}
 %flex-column {
   display: flex;
   flex-direction: column;
