@@ -147,6 +147,7 @@ export default {
   width: 100%;
   z-index: 1000;
   text-align: center;
+  pointer-events: none;
 }
 
 .w-message {
@@ -157,6 +158,7 @@ export default {
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, .12), 0 6px 16px 0 rgba(0, 0, 0, .08), 0 9px 28px 8px rgba(0, 0, 0, .05);
   color: $color;
   font-size: $font-size;
+  pointer-events: all;
 
   .w-message-icon {
     flex-shrink: 0;
