@@ -29,20 +29,18 @@ new Vue({
   el: '#app',
   data: {
     loading1: false,
-    message: '落霞与孤鹜齐飞，秋水共长天一色落霞与孤鹜齐飞'
+    message: '<em>落霞与孤鹜齐飞</em>'
   },
   methods: {
     showMessage () {
       this.$message({
-        content: '<em>使用了 HTML 标签</em>'
+        content: this.message,
+        duration: 1
       })
     },
     handleClick (event) {
       console.log(event)
       this.loading1 = true
-      setTimeout(() => {
-        this.loading1 = false
-      }, 1000)
     }
   }
 })

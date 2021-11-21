@@ -51,7 +51,7 @@ export default {
     },
     duration: {
       type: Number,
-      default: 30
+      default: 3
     },
     closeable: {
       type: Boolean,
@@ -117,6 +117,7 @@ export default {
       this.clearTimer()
       this.executeCallback()
       this.toggleVisible(false)
+      this.$emit('close', this)
     },
     handleAfterLeave() {
       this.$el.remove()
