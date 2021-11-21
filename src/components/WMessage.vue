@@ -9,7 +9,7 @@
           class="w-message-icon"
         ></w-icon>
         <span v-if="!dangerouslyUseHTML" class="w-message-content">{{ content }}</span>
-        <span v-else v-html="content"></span>
+        <span v-else v-html="content" class="w-message-content"></span>
         <w-icon v-if="closeable" class="w-message-close" icon="close" @click="close"></w-icon>
       </div>
     </div>
@@ -51,7 +51,7 @@ export default {
     },
     duration: {
       type: Number,
-      default: 3
+      default: 30
     },
     closeable: {
       type: Boolean,
@@ -91,7 +91,6 @@ export default {
     }
   },
   mounted() {
-    this.toggleVisible(true)
     this.handleAutoClose()
   },
   methods: {
@@ -179,6 +178,10 @@ export default {
     &.w-message-error {
       color: $color-danger;
     }
+  }
+
+  .w-message-content {
+    text-align: left;
   }
 
   .w-message-close {
