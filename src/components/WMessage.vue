@@ -138,7 +138,7 @@ export default {
   transition: all .3s;
 }
 .w-message-slide-leave-active {
-  transition: all .15s;
+  transition: all .2s;
 }
 
 .w-message-wrapper {
@@ -148,6 +148,7 @@ export default {
   z-index: 1000;
   text-align: center;
   pointer-events: none;
+  transition: all .3s;
 }
 
 .w-message {
