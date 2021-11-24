@@ -29,14 +29,12 @@ new Vue({
   el: '#app',
   data: {
     loading1: false,
-    message: '<em>落霞与孤鹜齐飞</em>'
+    message: '落霞与孤鹜齐飞'
   },
   methods: {
-    showMessage () {
-      this.$message({
-        content: this.message,
-        duration: 1
-      })
+    showMessage (duration) {
+      const content = this.message + duration
+      this.$message.error(111)
     },
     handleClick (event) {
       console.log(event)

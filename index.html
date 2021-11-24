@@ -36,7 +36,9 @@
   <body>
     <div id="app">
       <div class="divider">
-        <w-button type="primary" @click="showMessage">操作</w-button>
+        <w-button type="primary" @click="showMessage(5)">操作</w-button>
+        <w-button @click="showMessage(10)">操作</w-button>
+        <w-button type="dashed" @click="showMessage(15)">操作</w-button>
       </div>
       <div class="divider">
         <w-input v-model="message" clearable show-password suffix="up" placeholder="测试测试"></w-input>
