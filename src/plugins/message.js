@@ -64,15 +64,15 @@ const createMessage = (Vue, config) => {
 export default {
   install (Vue) {
     Vue.prototype.$message = (config) => {
-      createMessage(Vue, config)
+      return createMessage(Vue, config)
     }
     typeList.forEach(type => {
       Vue.prototype.$message[type] = (config) => {
         const option = config || {}
         if (typeof config === 'string') {
-          createMessage(Vue, { type, content: option })
+          return createMessage(Vue, { type, content: option })
         } else {
-          createMessage(Vue, { type, ...option})
+          return createMessage(Vue, { type, ...option})
         }
       }
     })
