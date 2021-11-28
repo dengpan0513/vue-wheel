@@ -17,3 +17,15 @@ export const generateClass = function genearteClassName() {
   const classList = Array.from(arguments)
   return classList.join('')
 }
+
+/**
+ * @description 单词首字母大写
+ * @param {String} str
+ * @param {String} separator
+ * @returns {String}
+ */
+export const upperCaseFirstLetter = (str, separator) => {
+  return str.split(separator).map(item => {
+    return item.charAt(0).toUpperCase() + item.slice(1)
+  }).join('')
+}
